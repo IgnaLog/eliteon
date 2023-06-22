@@ -4,15 +4,16 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import { loginRequest } from "../../api/authService";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
-import { LuEyeOff, LuEye } from "react-icons/lu";
 import { css, styled } from "styled-components";
+import { LuEyeOff, LuEye, LuX } from "react-icons/lu";
+import spinnerSvg from "../../images/spinner-light.svg";
 
 const StyledSection = styled.section`
   width: 100%;
   max-width: 42.8rem;
   min-height: 40rem;
   text-align: center;
-  padding: 1rem;
+  padding: 2.4rem;
   overflow: hidden;
   border-radius: 10px;
   background-color: rgb(30, 27, 30);
@@ -54,7 +55,7 @@ const StyledTitle = styled.h2`
 const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
-  padding-bottom: 1rem;
+  margin: 15px 0px 10px;
 `;
 
 const StyledButton = styled.button`
@@ -76,6 +77,20 @@ const StyledButton = styled.button`
   line-height: 2.2rem;
   padding: 1rem 1.8rem;
   border-radius: 0.6rem;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+`;
+
+const StyledContentButton = styled.div<{ show: boolean }>`
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  opacity: ${({ show }) => (show ? 1 : 0)};
 `;
 
 const StyledWrapper = styled.div`
@@ -94,7 +109,7 @@ const StyledLabel = styled.label`
   letter-spacing: -0.1px;
   font-weight: 500;
   color: rgba(242, 241, 243, 1);
-  margin-top: 1rem;
+  margin-bottom: 8px;
 `;
 
 const StyledInput = styled(Field)`
@@ -137,54 +152,69 @@ const StyledInput = styled(Field)`
 `;
 
 const StyledInputWrapper = styled.div`
+  max-height: 100rem;
   position: relative;
   transition: max-height 0.4s ease-out 0s, opacity 0.8s ease 0s;
-  max-height: 100rem;
   opacity: 1;
 `;
 
-const StyledSideButton = styled.div`
+const StyledSideButton = styled.div<{ show: boolean }>`
+  height: 100%;
+  padding: 1.4rem 0.8rem;
   position: absolute;
   right: 0px;
   top: 0px;
-  height: 100%;
-  padding: 1.4rem 0.8rem;
+  align-items: center;
   -webkit-box-pack: center;
   justify-content: center;
   -webkit-box-align: center;
-  align-items: center;
   color: rgb(255, 255, 255);
   cursor: pointer;
-  display: flex;
-
-  /* position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #999;
-  font-size: 18px; */
+  user-select: none;
+  display: ${({ show }) => (show ? "flex" : "none")};
 `;
 
 const StyledErrorMessage = styled(ErrorMessage)`
-  font-family: cerebri, sans-serif;
+  margin: 0.25rem 0px 0px;
+  padding: 0.2rem 0px;
+  text-align: right;
+  color: rgb(250, 130, 106);
+  font-family: Cerebri Regular, sans-serif;
   font-size: 1.4rem;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: -0.01rem;
   line-height: 1.8rem;
   -webkit-box-pack: end;
   justify-content: flex-end;
-  text-align: right;
-  color: rgb(250, 130, 106);
-  padding: 0.2rem 0px;
-  margin: 0.25rem 0px 0px;
+`;
+
+const LoadingSpinner = styled.img<{ show: boolean }>`
+  width: 100%;
+  height: 100%;
+  max-width: 40px;
+  padding: 0.8rem;
+  position: absolute;
+  margin: 0px auto;
+  inset: 0px;
+  box-sizing: border-box;
+  pointer-events: none;
+  animation: 864ms linear 0s infinite normal none running spin;
+  display: ${({ show }) => (show ? "block" : "none")};
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;
 
 const signinSchema = Yup.object().shape({
-  username: Yup.string()
-    .email("It must be an email")
-    .required("Email is required"),
-  password: Yup.string().required("Password is required"),
+  username: Yup.string().required("a").min(3, "Must be at least 3 characters"),
+
+  password: Yup.string().required("a").min(5, "Must be at least 5 characters"),
 });
 
 type FormValues = {
@@ -252,52 +282,74 @@ const Login = () => {
   return (
     <StyledSection>
       <StyledTitle>Ingresar a Eliteon</StyledTitle>
-      {/* SERVER INFO */}
-      {serverMsg && <p className="errmsg">{serverMsg}</p>}
       <Formik
         initialValues={initialValues}
         validationSchema={signinSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, isSubmitting, handleChange, errors, touched }) => (
+        {({
+          values,
+          isSubmitting,
+          handleChange,
+          errors,
+          touched,
+          setFieldValue,
+        }) => (
           <StyledForm>
             {/* USERNAME */}
-            <StyledWrapper>
-              <StyledLabel htmlFor="username">Email</StyledLabel>
-              <StyledInput
-                type="text"
-                id="username"
-                name="username"
-                value={values.username}
-                onChange={customHandleChange(handleChange)}
-                placeholder="you@ejemplo.com"
-                error={errors.username && touched.username}
-              />
+            <div style={{ marginBottom: "5px", textAlign: "left" }}>
+              <StyledWrapper>
+                <StyledLabel htmlFor="username">Email</StyledLabel>
+                <StyledInputWrapper>
+                  <StyledInput
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={values.username}
+                    onChange={customHandleChange(handleChange)}
+                    placeholder="you@ejemplo.com"
+                    error={errors.username && touched.username}
+                  />
+                  <StyledSideButton
+                    show={values.username !== ""}
+                    onClick={() => setFieldValue("username", "")}
+                  >
+                    <LuX size={18} />
+                  </StyledSideButton>
+                </StyledInputWrapper>
 
-              <StyledErrorMessage name="username" component="p" />
-            </StyledWrapper>
+                <StyledErrorMessage name="username" component="p" />
+              </StyledWrapper>
 
-            {/* PASSWORD */}
-            <StyledWrapper>
-              <StyledLabel htmlFor="password">Contraseña</StyledLabel>
-              <StyledInputWrapper>
-                <StyledInput
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  name="password"
-                  value={values.password}
-                  onChange={customHandleChange(handleChange)}
-                  placeholder="Contraseña"
-                  autoComplete="off"
-                  className="inputPwd"
-                  error={errors.username && touched.username}
-                />
-                <StyledSideButton onClick={togglePasswordVisibility()}>
-                  {showPassword ? <LuEyeOff size={18} /> : <LuEye size={18} />}
-                </StyledSideButton>
-              </StyledInputWrapper>
-              <StyledErrorMessage name="password" component="p" />
-            </StyledWrapper>
+              {/* PASSWORD */}
+              <StyledWrapper>
+                <StyledLabel htmlFor="password">Contraseña</StyledLabel>
+                <StyledInputWrapper>
+                  <StyledInput
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    value={values.password}
+                    onChange={customHandleChange(handleChange)}
+                    placeholder="Contraseña"
+                    autoComplete="off"
+                    className="inputPwd"
+                    error={errors.username && touched.username}
+                  />
+                  <StyledSideButton
+                    show={values.password !== ""}
+                    onClick={togglePasswordVisibility()}
+                  >
+                    {showPassword ? (
+                      <LuEyeOff size={18} />
+                    ) : (
+                      <LuEye size={18} />
+                    )}
+                  </StyledSideButton>
+                </StyledInputWrapper>
+                <StyledErrorMessage name="password" component="p" />
+              </StyledWrapper>
+            </div>
 
             <div style={{ marginBottom: "1.8rem" }}>
               <span>
@@ -311,12 +363,27 @@ const Login = () => {
             </div>
 
             {/* BUTTON SUBMITTING */}
+
             <StyledButton type="submit" disabled={isSubmitting}>
-              Iniciar sesión
+              <LoadingSpinner
+                src={spinnerSvg}
+                alt="Loading"
+                show={isSubmitting}
+              />
+              <StyledContentButton show={!isSubmitting}>
+                Iniciar sesión
+              </StyledContentButton>
             </StyledButton>
           </StyledForm>
         )}
       </Formik>
+
+      {/* SERVER INFO */}
+      {serverMsg && (
+        <p style={{ paddingTop: "10px", color: "rgb(255, 7, 97)" }}>
+          {serverMsg}
+        </p>
+      )}
 
       <div style={{ marginTop: "25px" }}>
         <a>Olvidó su contraseña?</a>

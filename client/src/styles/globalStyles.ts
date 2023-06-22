@@ -19,19 +19,16 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-
-
   html, body, #root{
     margin: 0;
     height: 100%;
-    font-family: Cerebri, Helvetica, sans-serif;
+    font-family: Cerebri Regular, Helvetica, sans-serif;
     font-weight: 500;
     font-size: 10px;
     background-color: rgb(16, 16, 16);
     color-scheme: dark;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    
   }
 
   .App {
@@ -42,7 +39,6 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh; 
     padding: 1rem 0.5rem;
   }
-
 `;
 
 export default GlobalStyle;
