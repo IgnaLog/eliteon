@@ -9,12 +9,9 @@ import { LuEyeOff, LuEye, LuX } from "react-icons/lu";
 import spinnerSvg from "../../images/spinner-light.svg";
 
 const StyledSection = styled.section`
-  width: 100%;
   max-width: 42.8rem;
-  min-height: 40rem;
   text-align: center;
   padding: 2.4rem;
-  overflow: hidden;
   border-radius: 10px;
   background-color: rgb(30, 27, 30);
 
@@ -22,9 +19,7 @@ const StyledSection = styled.section`
   a {
     font-family: cerebri, sans-serif;
     font-size: 1.4rem;
-    font-weight: 500;
     letter-spacing: -0.1px;
-    line-height: 1.8rem;
     color: white;
   }
 
@@ -39,17 +34,14 @@ const StyledSection = styled.section`
   a:active {
     text-decoration: none;
     cursor: pointer;
-    color: white;
   }
 `;
 
 const StyledTitle = styled.h2`
-  text-align: center;
   font-family: cerebri, sans-serif;
   font-size: 3rem;
   letter-spacing: -0.2px;
   line-height: 3.4rem;
-  color: white;
 `;
 
 const StyledForm = styled(Form)`
@@ -59,24 +51,19 @@ const StyledForm = styled(Form)`
 `;
 
 const StyledButton = styled.button`
-  cursor: pointer;
-  display: inline-block;
-  appearance: none;
-  border: 0.1rem solid rgb(69, 255, 255);
-  transition: border-color 216ms ease-in-out 0s,
-    background-color 216ms ease-in-out 0s, transform 0.15s ease-in-out 0s;
-  width: 100%;
   position: relative;
-  outline: none;
-  text-decoration: none;
+  padding: 1rem 1.8rem;
+  border: 0.1rem solid rgb(69, 255, 255);
+  border-radius: 0.6rem;
+  cursor: pointer;
   background-color: rgb(69, 255, 255);
   color: rgb(16, 16, 16);
   font-family: Cerebri, sans-serif;
   font-size: 1.7rem;
   letter-spacing: -0.01rem;
   line-height: 2.2rem;
-  padding: 1rem 1.8rem;
-  border-radius: 0.6rem;
+  transition: border-color 216ms ease-in-out 0s,
+    background-color 216ms ease-in-out 0s, transform 0.15s ease-in-out 0s;
 
   &:disabled {
     opacity: 0.4;
@@ -84,7 +71,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const StyledContentButton = styled.div<{ show: boolean }>`
+const StyledContentButton = styled.div<{ show: any }>`
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
@@ -96,9 +83,6 @@ const StyledContentButton = styled.div<{ show: boolean }>`
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  -webkit-box-pack: start;
-  justify-content: flex-start;
-  min-width: 10rem;
   margin-bottom: 1.5rem;
 `;
 
@@ -107,7 +91,6 @@ const StyledLabel = styled.label`
   line-height: 20px;
   font-size: 14px;
   letter-spacing: -0.1px;
-  font-weight: 500;
   color: rgba(242, 241, 243, 1);
   margin-bottom: 8px;
 `;
@@ -123,7 +106,6 @@ const StyledInput = styled(Field)`
   letter-spacing: -0.01rem;
   font-family: cerebri, "sans-serif";
   font-size: 1.6rem;
-  font-weight: 400;
   transition: all 0.2s ease-in-out 0s;
 
   &:hover {
@@ -152,13 +134,11 @@ const StyledInput = styled(Field)`
 `;
 
 const StyledInputWrapper = styled.div`
-  max-height: 100rem;
   position: relative;
   transition: max-height 0.4s ease-out 0s, opacity 0.8s ease 0s;
-  opacity: 1;
 `;
 
-const StyledSideButton = styled.div<{ show: boolean }>`
+const StyledSideButton = styled.div<{ show: any }>`
   height: 100%;
   padding: 1.4rem 0.8rem;
   position: absolute;
@@ -181,16 +161,16 @@ const StyledErrorMessage = styled(ErrorMessage)`
   color: rgb(250, 130, 106);
   font-family: Cerebri Regular, sans-serif;
   font-size: 1.4rem;
-  font-weight: 300;
   letter-spacing: -0.01rem;
   line-height: 1.8rem;
   -webkit-box-pack: end;
   justify-content: flex-end;
 `;
 
-const LoadingSpinner = styled.img<{ show: boolean }>`
+const LoadingSpinner = styled.img`
   width: 100%;
   height: 100%;
+  display: block;
   max-width: 40px;
   padding: 0.8rem;
   position: absolute;
@@ -199,7 +179,6 @@ const LoadingSpinner = styled.img<{ show: boolean }>`
   box-sizing: border-box;
   pointer-events: none;
   animation: 864ms linear 0s infinite normal none running spin;
-  display: ${({ show }) => (show ? "block" : "none")};
 
   @keyframes spin {
     0% {
@@ -212,9 +191,8 @@ const LoadingSpinner = styled.img<{ show: boolean }>`
 `;
 
 const signinSchema = Yup.object().shape({
-  username: Yup.string().required("a").min(3, "Must be at least 3 characters"),
-
-  password: Yup.string().required("a").min(5, "Must be at least 5 characters"),
+  username: Yup.string().required("").min(3, "Must be at least 3 characters"),
+  password: Yup.string().required("").min(5, "Must be at least 5 characters"),
 });
 
 type FormValues = {
@@ -226,7 +204,6 @@ const Login = () => {
   const { setAuth } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   const [serverMsg, setServerMsg] = useState("");
-
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/"; // It is used to get the previous location of the web page from which the login page is accessed. If either of the "state" or "from" properties does not exist, the default value "/" is returned.
@@ -253,6 +230,7 @@ const Login = () => {
     { resetForm, setSubmitting }: FormikHelpers<FormValues>
   ) => {
     try {
+      setServerMsg("");
       const response = await loginRequest(values);
       const accessToken = response?.data?.accessToken;
       setAuth({ user: values.username, accessToken });
@@ -299,7 +277,7 @@ const Login = () => {
             {/* USERNAME */}
             <div style={{ marginBottom: "5px", textAlign: "left" }}>
               <StyledWrapper>
-                <StyledLabel htmlFor="username">Email</StyledLabel>
+                <StyledLabel>Email</StyledLabel>
                 <StyledInputWrapper>
                   <StyledInput
                     type="text"
@@ -308,22 +286,21 @@ const Login = () => {
                     value={values.username}
                     onChange={customHandleChange(handleChange)}
                     placeholder="you@ejemplo.com"
-                    error={errors.username && touched.username}
+                    error={errors.username && touched.username ? 1 : 0}
                   />
                   <StyledSideButton
-                    show={values.username !== ""}
+                    show={values.username !== "" ? 1 : 0}
                     onClick={() => setFieldValue("username", "")}
                   >
                     <LuX size={18} />
                   </StyledSideButton>
                 </StyledInputWrapper>
-
                 <StyledErrorMessage name="username" component="p" />
               </StyledWrapper>
 
               {/* PASSWORD */}
               <StyledWrapper>
-                <StyledLabel htmlFor="password">Contraseña</StyledLabel>
+                <StyledLabel>Contraseña</StyledLabel>
                 <StyledInputWrapper>
                   <StyledInput
                     type={showPassword ? "text" : "password"}
@@ -333,11 +310,10 @@ const Login = () => {
                     onChange={customHandleChange(handleChange)}
                     placeholder="Contraseña"
                     autoComplete="off"
-                    className="inputPwd"
-                    error={errors.username && touched.username}
+                    error={errors.password && touched.password ? 1 : 0}
                   />
                   <StyledSideButton
-                    show={values.password !== ""}
+                    show={values.password !== "" ? 1 : 0}
                     onClick={togglePasswordVisibility()}
                   >
                     {showPassword ? (
@@ -351,6 +327,7 @@ const Login = () => {
               </StyledWrapper>
             </div>
 
+            {/* TERMS AND CONDITIONS */}
             <div style={{ marginBottom: "1.8rem" }}>
               <span>
                 <span>
@@ -363,14 +340,11 @@ const Login = () => {
             </div>
 
             {/* BUTTON SUBMITTING */}
-
             <StyledButton type="submit" disabled={isSubmitting}>
-              <LoadingSpinner
-                src={spinnerSvg}
-                alt="Loading"
-                show={isSubmitting}
-              />
-              <StyledContentButton show={!isSubmitting}>
+              {isSubmitting && (
+                <LoadingSpinner src={spinnerSvg} alt="Loading" />
+              )}
+              <StyledContentButton show={!isSubmitting ? 1 : 0}>
                 Iniciar sesión
               </StyledContentButton>
             </StyledButton>
@@ -385,6 +359,7 @@ const Login = () => {
         </p>
       )}
 
+      {/* FORGOT PWD AND REGISTRATION */}
       <div style={{ marginTop: "25px" }}>
         <a>Olvidó su contraseña?</a>
       </div>
