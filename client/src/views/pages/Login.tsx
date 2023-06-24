@@ -1,10 +1,11 @@
 import { useState, ChangeEvent } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import { loginRequest } from "../../api/authService";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
 import { LuEyeOff, LuEye, LuX } from "react-icons/lu";
 import spinnerSvg from "../../images/spinner-light.svg";
 
@@ -190,23 +191,24 @@ const LoadingSpinner = styled.img`
   }
 `;
 
-const signinSchema = Yup.object().shape({
-  email: Yup.string().required("").min(3, "Must be at least 3 characters"),
-  password: Yup.string().required("").min(5, "Must be at least 5 characters"),
-});
-
 type FormValues = {
   email: string;
   password: string;
 };
 
 const Login = () => {
+  const { t } = useTranslation(["login"]);
   const { setAuth } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   const [serverMsg, setServerMsg] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/"; // It is used to get the previous location of the web page from which the login page is accessed. If either of the "state" or "from" properties does not exist, the default value "/" is returned.
+
+  const signinSchema = Yup.object().shape({
+    email: Yup.string().required("").min(3, t("yupEmail")),
+    password: Yup.string().required("").min(5, t("yupPassword")),
+  });
 
   const initialValues: FormValues = {
     email: "",
@@ -233,19 +235,20 @@ const Login = () => {
       setServerMsg("");
       const response = await loginRequest(values);
       const accessToken = response?.data?.accessToken;
-      setAuth({ user: values.email, accessToken });
+      const user = response?.data?.user;
+      setAuth({ user, accessToken });
       resetForm();
       navigate(from, { replace: true }); // The first argument of the navigate function is the location to which you want to redirect the user. "replace: true" is an options object used to replace the current entry in the browser history instead of adding a new entry. This means that if the user clicks the "Back" button in the browser, they will not return to the login page, but instead return to the page before the login page.
     } catch (err: any) {
       if (!err?.response) {
-        setServerMsg("No Server Response");
+        setServerMsg(t("ServerMsgNoResponse"));
       } else if (err.response?.status === 400) {
-        setServerMsg("Invalid Email or Password");
+        setServerMsg(t("ServerMsgInvalid"));
       } else if (err.response?.status === 401) {
-        setServerMsg("Unauthorized");
+        setServerMsg(t("ServerMsgUnauthorized"));
         resetForm();
       } else {
-        setServerMsg("Login Failed");
+        setServerMsg(t("ServerMsgFailed"));
         resetForm({
           values: {
             ...values,
@@ -259,7 +262,7 @@ const Login = () => {
 
   return (
     <StyledSection>
-      <StyledTitle>Ingresar a Eliteon</StyledTitle>
+      <StyledTitle>{t("title")}</StyledTitle>
       <Formik
         initialValues={initialValues}
         validationSchema={signinSchema}
@@ -277,7 +280,7 @@ const Login = () => {
             {/* EMAIL */}
             <div style={{ marginBottom: "5px", textAlign: "left" }}>
               <StyledWrapper>
-                <StyledLabel>Email</StyledLabel>
+                <StyledLabel>{t("email")}</StyledLabel>
                 <StyledInputWrapper>
                   <StyledInput
                     type="text"
@@ -285,7 +288,7 @@ const Login = () => {
                     name="email"
                     value={values.email}
                     onChange={customHandleChange(handleChange)}
-                    placeholder="you@ejemplo.com"
+                    placeholder={t("emailPlaceholder")}
                     error={errors.email && touched.email ? 1 : 0}
                   />
                   <StyledSideButton
@@ -300,7 +303,7 @@ const Login = () => {
 
               {/* PASSWORD */}
               <StyledWrapper>
-                <StyledLabel>Contraseña</StyledLabel>
+                <StyledLabel>{t("password")}</StyledLabel>
                 <StyledInputWrapper>
                   <StyledInput
                     type={showPassword ? "text" : "password"}
@@ -308,7 +311,7 @@ const Login = () => {
                     name="password"
                     value={values.password}
                     onChange={customHandleChange(handleChange)}
-                    placeholder="Contraseña"
+                    placeholder={t("passwordPlaceholder")}
                     autoComplete="off"
                     error={errors.password && touched.password ? 1 : 0}
                   />
@@ -331,10 +334,7 @@ const Login = () => {
             <div style={{ marginBottom: "1.8rem" }}>
               <span>
                 <span>
-                  By continuing you agree to Eliteon's{" "}
-                  <a href="/">Terms of Service</a>, including{" "}
-                  <a href="/">Additional Terms</a>, and{" "}
-                  <a href="/">Privacy Policy</a>.
+                  <Trans t={t} i18nKey="terms" components={{ a: <a /> }} />
                 </span>
               </span>
             </div>
@@ -345,7 +345,7 @@ const Login = () => {
                 <LoadingSpinner src={spinnerSvg} alt="Loading" />
               )}
               <StyledContentButton show={!isSubmitting ? 1 : 0}>
-                Iniciar sesión
+                {t("submit")}
               </StyledContentButton>
             </StyledButton>
           </StyledForm>
@@ -361,11 +361,14 @@ const Login = () => {
 
       {/* FORGOT PWD AND REGISTRATION */}
       <div style={{ marginTop: "25px" }}>
-        <a>Olvidó su contraseña?</a>
+        <Trans t={t} i18nKey="forgotPasswordLink" components={{ a: <a /> }} />
       </div>
       <div style={{ marginTop: "15px" }}>
-        <span>No tienes una cuenta?</span>
-        <a href="/register"> Regístrate</a>
+        <Trans
+          t={t}
+          i18nKey="noAccount"
+          components={{ a: <a />, span: <span /> }}
+        />
       </div>
     </StyledSection>
   );

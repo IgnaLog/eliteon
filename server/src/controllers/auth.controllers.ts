@@ -32,7 +32,7 @@ const handleLogin = async (req: Request, res: Response) => {
       const accessToken = jwt.sign(
         {
           userInfo: {
-            email: foundUser.email,
+            user: foundUser.id,
             roles: roles,
           },
         },
@@ -40,7 +40,7 @@ const handleLogin = async (req: Request, res: Response) => {
         { expiresIn: "10s" } // Production expiresIn 5-15 min
       );
       const newRefreshToken = jwt.sign(
-        { email: foundUser.email },
+        { user: foundUser.id },
         REFRESH_TOKEN_SECRET as Secret,
         { expiresIn: "1d" }
       );
@@ -109,7 +109,7 @@ const handleLogin = async (req: Request, res: Response) => {
         maxAge: 24 * 60 * 60 * 1000, // 1d in milliseconds
       });
       // Send the accessToken
-      res.json({ accessToken });
+      res.json({ accessToken, user: foundUser.id });
     } else {
       res.sendStatus(401); // Unauthorized
     }

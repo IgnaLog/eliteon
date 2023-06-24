@@ -10,7 +10,7 @@ const verifyJWT = async (req: Request, res: Response, next: NextFunction) => {
   const token = authHeader.split(" ")[1];
   try {
     const decoded: any = await jwt.verify(token, ACCESS_TOKEN_SECRET as Secret);
-    req.user = decoded.userInfo.email;
+    req.user = decoded.userInfo.user;
     req.roles = decoded.userInfo.roles;
     next();
   } catch (err) {

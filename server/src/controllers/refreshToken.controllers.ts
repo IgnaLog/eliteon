@@ -57,7 +57,7 @@ const handleRefreshToken = async (req: Request, res: Response) => {
         refreshToken,
         REFRESH_TOKEN_SECRET as Secret
       );
-      if (foundUser.email !== decoded.email) throw new Error();
+      if (foundUser.id !== decoded.user) throw new Error();
 
       // RefreshToken was still valid
       const roles: number[] = foundUser.roles.map((role) => role.roleId);
@@ -65,7 +65,7 @@ const handleRefreshToken = async (req: Request, res: Response) => {
       const accessToken = jwt.sign(
         {
           userInfo: {
-            email: decoded.email,
+            user: decoded.user,
             roles: roles,
           },
         },
@@ -74,7 +74,7 @@ const handleRefreshToken = async (req: Request, res: Response) => {
       );
 
       const newRefreshToken = jwt.sign(
-        { email: foundUser.email },
+        { user: foundUser.id },
         REFRESH_TOKEN_SECRET as Secret,
         { expiresIn: "1d" }
       );
