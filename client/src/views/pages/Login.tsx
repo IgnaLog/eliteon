@@ -191,12 +191,12 @@ const LoadingSpinner = styled.img`
 `;
 
 const signinSchema = Yup.object().shape({
-  username: Yup.string().required("").min(3, "Must be at least 3 characters"),
+  email: Yup.string().required("").min(3, "Must be at least 3 characters"),
   password: Yup.string().required("").min(5, "Must be at least 5 characters"),
 });
 
 type FormValues = {
-  username: string;
+  email: string;
   password: string;
 };
 
@@ -209,7 +209,7 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/"; // It is used to get the previous location of the web page from which the login page is accessed. If either of the "state" or "from" properties does not exist, the default value "/" is returned.
 
   const initialValues: FormValues = {
-    username: "",
+    email: "",
     password: "",
   };
 
@@ -233,14 +233,14 @@ const Login = () => {
       setServerMsg("");
       const response = await loginRequest(values);
       const accessToken = response?.data?.accessToken;
-      setAuth({ user: values.username, accessToken });
+      setAuth({ user: values.email, accessToken });
       resetForm();
       navigate(from, { replace: true }); // The first argument of the navigate function is the location to which you want to redirect the user. "replace: true" is an options object used to replace the current entry in the browser history instead of adding a new entry. This means that if the user clicks the "Back" button in the browser, they will not return to the login page, but instead return to the page before the login page.
     } catch (err: any) {
       if (!err?.response) {
         setServerMsg("No Server Response");
       } else if (err.response?.status === 400) {
-        setServerMsg("Missing Username or Password");
+        setServerMsg("Invalid Email or Password");
       } else if (err.response?.status === 401) {
         setServerMsg("Unauthorized");
         resetForm();
@@ -249,7 +249,7 @@ const Login = () => {
         resetForm({
           values: {
             ...values,
-            username: "",
+            email: "",
           },
         });
       }
@@ -274,28 +274,28 @@ const Login = () => {
           setFieldValue,
         }) => (
           <StyledForm>
-            {/* USERNAME */}
+            {/* EMAIL */}
             <div style={{ marginBottom: "5px", textAlign: "left" }}>
               <StyledWrapper>
                 <StyledLabel>Email</StyledLabel>
                 <StyledInputWrapper>
                   <StyledInput
                     type="text"
-                    id="username"
-                    name="username"
-                    value={values.username}
+                    id="email"
+                    name="email"
+                    value={values.email}
                     onChange={customHandleChange(handleChange)}
                     placeholder="you@ejemplo.com"
-                    error={errors.username && touched.username ? 1 : 0}
+                    error={errors.email && touched.email ? 1 : 0}
                   />
                   <StyledSideButton
-                    show={values.username !== "" ? 1 : 0}
+                    show={values.email !== "" ? 1 : 0}
                     onClick={() => setFieldValue("username", "")}
                   >
                     <LuX size={18} />
                   </StyledSideButton>
                 </StyledInputWrapper>
-                <StyledErrorMessage name="username" component="p" />
+                <StyledErrorMessage name="email" component="p" />
               </StyledWrapper>
 
               {/* PASSWORD */}

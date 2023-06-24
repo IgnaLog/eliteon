@@ -5,9 +5,9 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const handleNewUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-  // Check for duplicate username in the db
-  const duplicate = await prisma.user.findUnique({ where: { username } });
+  const { email, password } = req.body;
+  // Check for duplicate email in the db
+  const duplicate = await prisma.user.findUnique({ where: { email } });
   if (duplicate) {
     return res.sendStatus(409); // Conflict
   }
@@ -19,7 +19,7 @@ const handleNewUser = async (req: Request, res: Response) => {
     await prisma.$transaction(async (transaction) => {
       const user = await transaction.user.create({
         data: {
-          username,
+          email,
           password: hashedPwd,
         },
       });
@@ -30,7 +30,7 @@ const handleNewUser = async (req: Request, res: Response) => {
       });
     });
 
-    res.status(201).json({ success: `New user ${username} created!` });
+    res.status(201).json({ success: `New user ${email} created!` });
   } catch (err: any) {
     res.status(500).json({ message: err.message });
   }

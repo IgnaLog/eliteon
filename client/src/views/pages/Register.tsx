@@ -12,29 +12,17 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const signupSchema = Yup.object().shape({
-  username: Yup.string()
-    .required("Username is required.")
-    .min(4, "Username must have a minimum of 4 characters.")
-    .max(24, "Username too long.")
-    .matches(
-      /^[A-z][A-z0-9-_]{3,23}$/,
-      "Must begin with a letter. Letters, number, underscores, hyphens allowed."
-    ),
+  email: Yup.string().required("Email is required.").email("Invalid email"),
   password: Yup.string()
     .required("Password is required.")
-    .min(8, "Password must have a minimum of 8 characters.")
-    .max(24, "Password too long.")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/,
-      " Must include uppercase and lowercase letters, a number and a special character. Allowed special characters: ! @ # $ %"
-    ),
+    .min(5, "Password must have a minimum of 8 characters."),
   confirm_pwd: Yup.string()
     .required("Confirm password is required.")
     .oneOf([Yup.ref("password")], "Passwords don't match"),
 });
 
 type FormValues = {
-  username: string;
+  email: string;
   password: string;
   confirm_pwd: string;
 };
@@ -46,7 +34,7 @@ const Register = () => {
   const [serverMsg, setServerMsg] = useState("");
 
   const initialValues: FormValues = {
-    username: "",
+    email: "",
     password: "",
     confirm_pwd: "",
   };
@@ -81,11 +69,11 @@ const Register = () => {
       if (!err?.response) {
         setServerMsg("No Server Response");
       } else if (err.response?.status === 409) {
-        setServerMsg("Username Taken");
+        setServerMsg("Email already exists");
         resetForm({
           values: {
             ...values,
-            username: "",
+            email: "",
           },
         });
       } else {
@@ -123,26 +111,26 @@ const Register = () => {
           >
             {({ values, errors, touched, isSubmitting, handleChange }) => (
               <Form>
-                {/* USERNAME */}
-                <label htmlFor="username">
-                  Username:
-                  {touched.username && !errors.username && (
+                {/* EMAIL */}
+                <label>
+                  Email
+                  {touched.email && !errors.email && (
                     <FontAwesomeIcon icon={faCheck} className="valid" />
                   )}
-                  {touched.username && errors.username && (
+                  {touched.email && errors.email && (
                     <FontAwesomeIcon icon={faTimes} className="invalid" />
                   )}
                 </label>
                 <Field
                   type="text"
-                  id="username"
-                  name="username"
-                  value={values.username}
+                  id="email"
+                  name="email"
+                  value={values.email}
                   onChange={customHandleChange(handleChange)}
                   autoComplete="off"
                 />
-                <ErrorMessage name="username" component="p">
-                  {(errorMsg) => (
+                <ErrorMessage name="email" component="p">
+                  {(errorMsg: any) => (
                     <div className="instructions">
                       <FontAwesomeIcon icon={faInfoCircle} />
                       <span>{errorMsg}</span>
@@ -152,7 +140,7 @@ const Register = () => {
 
                 {/* PASSWORD */}
                 <label htmlFor="password">
-                  Contraseña:
+                  Contraseña
                   {touched.password && !errors.password && (
                     <FontAwesomeIcon icon={faCheck} className="valid" />
                   )}
@@ -178,7 +166,7 @@ const Register = () => {
                   </i>
                 </div>
                 <ErrorMessage name="password" component="p">
-                  {(errorMsg) => (
+                  {(errorMsg: any) => (
                     <div className="instructions">
                       <FontAwesomeIcon icon={faInfoCircle} />
                       <span>{errorMsg}</span>
@@ -218,7 +206,7 @@ const Register = () => {
                 </div>
 
                 <ErrorMessage name="confirm_pwd" component="p">
-                  {(errorMsg) => (
+                  {(errorMsg: any) => (
                     <div className="instructions">
                       <FontAwesomeIcon icon={faInfoCircle} />
                       <span>{errorMsg}</span>

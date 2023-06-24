@@ -36,7 +36,7 @@ const handleRefreshToken = async (req: Request, res: Response) => {
           REFRESH_TOKEN_SECRET as Secret
         );
         const hackedUser = await prisma.user.findUnique({
-          where: { username: decoded.username },
+          where: { email: decoded.email },
         });
 
         if (hackedUser) {
@@ -57,7 +57,7 @@ const handleRefreshToken = async (req: Request, res: Response) => {
         refreshToken,
         REFRESH_TOKEN_SECRET as Secret
       );
-      if (foundUser.username !== decoded.username) throw new Error();
+      if (foundUser.email !== decoded.email) throw new Error();
 
       // RefreshToken was still valid
       const roles: number[] = foundUser.roles.map((role) => role.roleId);
@@ -65,7 +65,7 @@ const handleRefreshToken = async (req: Request, res: Response) => {
       const accessToken = jwt.sign(
         {
           userInfo: {
-            username: decoded.username,
+            email: decoded.email,
             roles: roles,
           },
         },
@@ -74,7 +74,7 @@ const handleRefreshToken = async (req: Request, res: Response) => {
       );
 
       const newRefreshToken = jwt.sign(
-        { username: foundUser.username },
+        { email: foundUser.email },
         REFRESH_TOKEN_SECRET as Secret,
         { expiresIn: "1d" }
       );

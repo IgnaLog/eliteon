@@ -9,10 +9,10 @@ const prisma = new PrismaClient();
 const handleLogin = async (req: Request, res: Response) => {
   try {
     const cookies = req.cookies;
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     const foundUser = await prisma.user.findUnique({
-      where: { username },
+      where: { email },
       include: {
         roles: { select: { rolename: true, roleId: true } },
       },
@@ -32,7 +32,7 @@ const handleLogin = async (req: Request, res: Response) => {
       const accessToken = jwt.sign(
         {
           userInfo: {
-            username: foundUser.username,
+            email: foundUser.email,
             roles: roles,
           },
         },
@@ -40,7 +40,7 @@ const handleLogin = async (req: Request, res: Response) => {
         { expiresIn: "10s" } // Production expiresIn 5-15 min
       );
       const newRefreshToken = jwt.sign(
-        { username: foundUser.username },
+        { email: foundUser.email },
         REFRESH_TOKEN_SECRET as Secret,
         { expiresIn: "1d" }
       );

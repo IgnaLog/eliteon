@@ -20,8 +20,8 @@ const Users = () => {
             controller.signal,
             axiosPrivate
           );
-          const userNames = response.data.map((user) => user.username);
-          setUsers(userNames);
+          const userEmails = response.data.map((user) => user.email);
+          setUsers(userEmails);
         } catch (err) {
           console.error(err);
           navigate("/login", { state: { from: location }, replace: true });
