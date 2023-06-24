@@ -2,7 +2,7 @@
     "yupEmail": "Debe tener al menos 3 caracteres",
     "yupPassword": "Debe tener al menos 5 caracteres",
     "ServerMsgNoResponse": "Sin respuesta del servidor",
-    "ServerMsgInvalid": "Correo electrónico o contraseña inválidos",
+    "ServerMsgInvalid": "Email o contraseña inválidos",
     "ServerMsgUnauthorized": "No autorizado",
     "ServerMsgFailed": "Inicio de sesión fallido",
     "email": "Email",

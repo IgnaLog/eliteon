@@ -7,7 +7,6 @@ import { loginRequest } from "../../api/authService";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import styled, { css } from "styled-components";
 import { LuEyeOff, LuEye, LuX } from "react-icons/lu";
-import spinnerSvg from "../../images/spinner-light.svg";
 
 const StyledSection = styled.section`
   max-width: 42.8rem;
@@ -342,7 +341,7 @@ const Login = () => {
             {/* BUTTON SUBMITTING */}
             <StyledButton type="submit" disabled={isSubmitting}>
               {isSubmitting && (
-                <LoadingSpinner src={spinnerSvg} alt="Loading" />
+                <LoadingSpinner src="/images/spinner-light.svg" alt="Loading" />
               )}
               <StyledContentButton show={!isSubmitting ? 1 : 0}>
                 {t("submit")}
