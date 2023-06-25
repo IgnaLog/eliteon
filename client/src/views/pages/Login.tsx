@@ -196,7 +196,7 @@ type FormValues = {
 };
 
 const Login = () => {
-  const { t } = useTranslation(["login"]);
+  const { t } = useTranslation();
   const { setAuth } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   const [serverMsg, setServerMsg] = useState("");
@@ -205,8 +205,8 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/"; // It is used to get the previous location of the web page from which the login page is accessed. If either of the "state" or "from" properties does not exist, the default value "/" is returned.
 
   const signinSchema = Yup.object().shape({
-    email: Yup.string().required("").min(3, t("yupEmail")),
-    password: Yup.string().required("").min(5, t("yupPassword")),
+    email: Yup.string().required("").min(3, t("login.yupEmail")),
+    password: Yup.string().required("").min(5, t("login.yupPassword")),
   });
 
   const initialValues: FormValues = {
@@ -240,14 +240,14 @@ const Login = () => {
       navigate(from, { replace: true }); // The first argument of the navigate function is the location to which you want to redirect the user. "replace: true" is an options object used to replace the current entry in the browser history instead of adding a new entry. This means that if the user clicks the "Back" button in the browser, they will not return to the login page, but instead return to the page before the login page.
     } catch (err: any) {
       if (!err?.response) {
-        setServerMsg(t("ServerMsgNoResponse"));
+        setServerMsg(t("login.ServerMsgNoResponse"));
       } else if (err.response?.status === 400) {
-        setServerMsg(t("ServerMsgInvalid"));
+        setServerMsg(t("login.ServerMsgInvalid"));
       } else if (err.response?.status === 401) {
-        setServerMsg(t("ServerMsgUnauthorized"));
+        setServerMsg(t("login.ServerMsgUnauthorized"));
         resetForm();
       } else {
-        setServerMsg(t("ServerMsgFailed"));
+        setServerMsg(t("login.ServerMsgFailed"));
         resetForm({
           values: {
             ...values,
@@ -261,7 +261,7 @@ const Login = () => {
 
   return (
     <StyledSection>
-      <StyledTitle>{t("title")}</StyledTitle>
+      <StyledTitle>{t("login.title")}</StyledTitle>
       <Formik
         initialValues={initialValues}
         validationSchema={signinSchema}
@@ -279,7 +279,7 @@ const Login = () => {
             {/* EMAIL */}
             <div style={{ marginBottom: "5px", textAlign: "left" }}>
               <StyledWrapper>
-                <StyledLabel>{t("email")}</StyledLabel>
+                <StyledLabel>{t("login.email")}</StyledLabel>
                 <StyledInputWrapper>
                   <StyledInput
                     type="text"
@@ -287,7 +287,7 @@ const Login = () => {
                     name="email"
                     value={values.email}
                     onChange={customHandleChange(handleChange)}
-                    placeholder={t("emailPlaceholder")}
+                    placeholder={t("login.emailPlaceholder")}
                     error={errors.email && touched.email ? 1 : 0}
                   />
                   <StyledSideButton
@@ -302,7 +302,7 @@ const Login = () => {
 
               {/* PASSWORD */}
               <StyledWrapper>
-                <StyledLabel>{t("password")}</StyledLabel>
+                <StyledLabel>{t("login.password")}</StyledLabel>
                 <StyledInputWrapper>
                   <StyledInput
                     type={showPassword ? "text" : "password"}
@@ -310,7 +310,7 @@ const Login = () => {
                     name="password"
                     value={values.password}
                     onChange={customHandleChange(handleChange)}
-                    placeholder={t("passwordPlaceholder")}
+                    placeholder={t("login.passwordPlaceholder")}
                     autoComplete="off"
                     error={errors.password && touched.password ? 1 : 0}
                   />
@@ -333,7 +333,11 @@ const Login = () => {
             <div style={{ marginBottom: "1.8rem" }}>
               <span>
                 <span>
-                  <Trans t={t} i18nKey="terms" components={{ a: <a /> }} />
+                  <Trans
+                    t={t}
+                    i18nKey="login.terms"
+                    components={{ a: <a /> }}
+                  />
                 </span>
               </span>
             </div>
@@ -344,7 +348,7 @@ const Login = () => {
                 <LoadingSpinner src="/images/spinner-light.svg" alt="Loading" />
               )}
               <StyledContentButton show={!isSubmitting ? 1 : 0}>
-                {t("submit")}
+                {t("login.submit")}
               </StyledContentButton>
             </StyledButton>
           </StyledForm>
@@ -360,12 +364,16 @@ const Login = () => {
 
       {/* FORGOT PWD AND REGISTRATION */}
       <div style={{ marginTop: "25px" }}>
-        <Trans t={t} i18nKey="forgotPasswordLink" components={{ a: <a /> }} />
+        <Trans
+          t={t}
+          i18nKey="login.forgotPasswordLink"
+          components={{ a: <a /> }}
+        />
       </div>
       <div style={{ marginTop: "15px" }}>
         <Trans
           t={t}
-          i18nKey="noAccount"
+          i18nKey="login.noAccount"
           components={{ a: <a />, span: <span /> }}
         />
       </div>
