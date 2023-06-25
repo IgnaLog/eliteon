@@ -97,7 +97,7 @@ const StyledLabel = styled.label`
 
 const StyledInput = styled(Field)`
   width: 100%;
-  padding: 1.4rem 3.6rem 1.4rem 1.6rem;
+  padding: 1.4rem 4.2rem 1.4rem 1.6rem;
   border: 1px solid rgb(63, 59, 69);
   line-height: 2rem;
   color: rgb(242, 241, 243);
@@ -139,11 +139,11 @@ const StyledInputWrapper = styled.div`
 `;
 
 const StyledSideButton = styled.div<{ show: any }>`
-  height: 100%;
+  height: 70%;
   padding: 1.4rem 0.8rem;
   position: absolute;
-  right: 0px;
-  top: 0px;
+  right: 1.5%;
+  top: 16%;
   align-items: center;
   -webkit-box-pack: center;
   justify-content: center;
@@ -152,6 +152,15 @@ const StyledSideButton = styled.div<{ show: any }>`
   cursor: pointer;
   user-select: none;
   display: ${({ show }) => (show ? "flex" : "none")};
+
+  &:hover {
+    background: #46464636;
+    border-radius: 8px;
+  }
+
+  &:active {
+    background: #8a8a8a36;
+  }
 `;
 
 const StyledErrorMessage = styled(ErrorMessage)`
@@ -206,7 +215,7 @@ const Login = () => {
 
   const signinSchema = Yup.object().shape({
     email: Yup.string().required("").min(3, t("login.yupEmail")),
-    password: Yup.string().required("").min(5, t("login.yupPassword")),
+    password: Yup.string().required("").min(8, t("login.yupPassword")),
   });
 
   const initialValues: FormValues = {
@@ -240,14 +249,14 @@ const Login = () => {
       navigate(from, { replace: true }); // The first argument of the navigate function is the location to which you want to redirect the user. "replace: true" is an options object used to replace the current entry in the browser history instead of adding a new entry. This means that if the user clicks the "Back" button in the browser, they will not return to the login page, but instead return to the page before the login page.
     } catch (err: any) {
       if (!err?.response) {
-        setServerMsg(t("login.ServerMsgNoResponse"));
+        setServerMsg(t("login.serverMsgNoResponse"));
       } else if (err.response?.status === 400) {
-        setServerMsg(t("login.ServerMsgInvalid"));
+        setServerMsg(t("login.serverMsgInvalid"));
       } else if (err.response?.status === 401) {
-        setServerMsg(t("login.ServerMsgUnauthorized"));
+        setServerMsg(t("login.serverMsgUnauthorized"));
         resetForm();
       } else {
-        setServerMsg(t("login.ServerMsgFailed"));
+        setServerMsg(t("login.serverMsgFailed"));
         resetForm({
           values: {
             ...values,
@@ -276,8 +285,8 @@ const Login = () => {
           setFieldValue,
         }) => (
           <StyledForm>
-            {/* EMAIL */}
             <div style={{ marginBottom: "5px", textAlign: "left" }}>
+              {/* EMAIL */}
               <StyledWrapper>
                 <StyledLabel>{t("login.email")}</StyledLabel>
                 <StyledInputWrapper>
@@ -292,7 +301,7 @@ const Login = () => {
                   />
                   <StyledSideButton
                     show={values.email !== "" ? 1 : 0}
-                    onClick={() => setFieldValue("username", "")}
+                    onClick={() => setFieldValue("email", "")}
                   >
                     <LuX size={18} />
                   </StyledSideButton>
@@ -332,13 +341,7 @@ const Login = () => {
             {/* TERMS AND CONDITIONS */}
             <div style={{ marginBottom: "1.8rem" }}>
               <span>
-                <span>
-                  <Trans
-                    t={t}
-                    i18nKey="login.terms"
-                    components={{ a: <a /> }}
-                  />
-                </span>
+                <Trans t={t} i18nKey="login.terms" components={{ a: <a /> }} />
               </span>
             </div>
 
