@@ -393,13 +393,14 @@ const Register = () => {
             </div>
 
             {/* TERMS AND CONDITIONS */}
-            <div style={{ marginBottom: "3rem" }}>
+            <div style={{ marginBottom: "2rem", marginTop: "2rem" }}>
               <span>
-                <Trans
-                  t={t}
-                  i18nKey="register.terms"
-                  components={{ a: <a /> }}
-                />
+                <Trans t={t} i18nKey="register.terms" components={{ a: <a /> }}>
+                  By creating an account, you agree to Eliteon's{" "}
+                  <a href="/terms-of-service">Terms of Service</a>, including
+                  the <a href="/additional-terms">Additional Terms</a> and{" "}
+                  <a href="/privacy-policy">Privacy Policy</a>.
+                </Trans>
               </span>
             </div>
 
@@ -412,6 +413,7 @@ const Register = () => {
                 {t("register.submit")}
               </StyledContentButton>
             </StyledButton>
+            {/* FINAL FORM */}
           </StyledForm>
         )}
       </Formik>
