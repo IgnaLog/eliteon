@@ -184,7 +184,8 @@ const StyledSideButton = styled.div<{ show: any }>`
   user-select: none;
   display: ${({ show }) => (show ? "flex" : "none")};
 
-  &:hover {
+  &:hover,
+  &:active {
     background: #46464636;
     border-radius: 8px;
   }

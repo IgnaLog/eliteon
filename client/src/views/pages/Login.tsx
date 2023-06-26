@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useRef, MouseEvent } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -153,13 +153,14 @@ const StyledSideButton = styled.div<{ show: any }>`
   user-select: none;
   display: ${({ show }) => (show ? "flex" : "none")};
 
-  &:hover {
+  &:hover,
+  &:active {
     background: #46464636;
     border-radius: 8px;
   }
 
   &:active {
-    background: #8a8a8a36;
+    background: #4646461a;
   }
 `;
 
@@ -209,6 +210,8 @@ const Login = () => {
   const { setAuth } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   const [serverMsg, setServerMsg] = useState("");
+  const inputEmailRef = useRef<HTMLInputElement>(null);
+  const inputPwdRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/"; // It is used to get the previous location of the web page from which the login page is accessed. If either of the "state" or "from" properties does not exist, the default value "/" is returned.
@@ -223,7 +226,27 @@ const Login = () => {
     password: "",
   };
 
-  const togglePasswordVisibility = () => () => {
+  const handleFocusEmailField = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    inputEmailRef.current?.focus();
+  };
+
+  const handleFocusPwdField = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    inputPwdRef.current?.focus();
+  };
+
+  const handleClearEmail = (setFieldValue: any) => {
+    setFieldValue("email", "");
+    inputEmailRef.current?.focus();
+  };
+
+  const handleEyeClick = () => {
+    togglePasswordVisibility();
+    inputPwdRef.current?.focus();
+  };
+
+  const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
@@ -295,13 +318,15 @@ const Login = () => {
                     id="email"
                     name="email"
                     value={values.email}
+                    innerRef={inputEmailRef}
                     onChange={customHandleChange(handleChange)}
                     placeholder={t("login.emailPlaceholder")}
                     error={errors.email && touched.email ? 1 : 0}
                   />
                   <StyledSideButton
                     show={values.email !== "" ? 1 : 0}
-                    onClick={() => setFieldValue("email", "")}
+                    onClick={() => handleClearEmail(setFieldValue)}
+                    onMouseDown={handleFocusEmailField}
                   >
                     <LuX size={18} />
                   </StyledSideButton>
@@ -318,6 +343,7 @@ const Login = () => {
                     id="password"
                     name="password"
                     value={values.password}
+                    innerRef={inputPwdRef}
                     onChange={customHandleChange(handleChange)}
                     placeholder={t("login.passwordPlaceholder")}
                     autoComplete="off"
@@ -325,7 +351,8 @@ const Login = () => {
                   />
                   <StyledSideButton
                     show={values.password !== "" ? 1 : 0}
-                    onClick={togglePasswordVisibility()}
+                    onClick={handleEyeClick}
+                    onMouseDown={handleFocusPwdField}
                   >
                     {showPassword ? (
                       <LuEyeOff size={18} />
@@ -341,7 +368,12 @@ const Login = () => {
             {/* TERMS AND CONDITIONS */}
             <div style={{ marginBottom: "1.8rem" }}>
               <span>
-                <Trans t={t} i18nKey="login.terms" components={{ a: <a /> }} />
+                <Trans t={t} i18nKey="login.terms" components={{ a: <a /> }}>
+                  By continuing you agree to Eliteon's{" "}
+                  <a href="/terms-of-service">Terms of Service</a>, including{" "}
+                  <a href="/additional-terms">Additional Terms</a>, and{" "}
+                  <a href="/privacy-policy">Privacy Policy</a>.
+                </Trans>
               </span>
             </div>
 
@@ -371,14 +403,19 @@ const Login = () => {
           t={t}
           i18nKey="login.forgotPasswordLink"
           components={{ a: <a /> }}
-        />
+        >
+          <a href="/forgot-password">Forgot your password?</a>
+        </Trans>
       </div>
       <div style={{ marginTop: "15px" }}>
         <Trans
           t={t}
           i18nKey="login.noAccount"
           components={{ a: <a />, span: <span /> }}
-        />
+        >
+          <span>Don't have an account?</span>
+          <a href="/register"> Sign up</a>
+        </Trans>
       </div>
     </StyledSection>
   );
