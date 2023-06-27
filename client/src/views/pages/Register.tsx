@@ -5,6 +5,8 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import styled, { css } from "styled-components";
 import { LuEyeOff, LuEye, LuX } from "react-icons/lu";
 import { Trans, useTranslation } from "react-i18next";
+import zxcvbn from "zxcvbn";
+import SecurityPwd from "../components/securityPwd/SecurityPwd";
 
 const StyledSection = styled.section`
   max-width: 42.8rem;
@@ -118,12 +120,14 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledLabel = styled.label`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
   font-family: cerebri, sans-serif;
   line-height: 20px;
   font-size: 14px;
   letter-spacing: -0.1px;
   color: rgba(242, 241, 243, 1);
-  margin-bottom: 8px;
 `;
 
 const StyledInput = styled(Field)`
@@ -231,6 +235,23 @@ const LoadingSpinner = styled.img`
   }
 `;
 
+const StyledPwdSpinner = styled.img`
+  width: 5%;
+  height: 5%;
+  user-select: none;
+  pointer-events: none;
+  animation: 864ms linear 0s infinite normal none running spin;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 type FormValues = {
   email: string;
   password: string;
@@ -240,8 +261,11 @@ const Register = () => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [serverMsg, setServerMsg] = useState("");
+  const [score, setScore] = useState<number | null>(null);
+  const [isEvaluating, setEvaluating] = useState(false);
   const inputEmailRef = useRef<HTMLInputElement>(null);
   const inputPwdRef = useRef<HTMLInputElement>(null);
+  const timeoutRef = useRef<number | undefined>(undefined);
 
   const signupSchema = Yup.object().shape({
     email: Yup.string().required("").email(t("register.yupEmail")),
@@ -277,12 +301,31 @@ const Register = () => {
     setShowPassword(!showPassword);
   };
 
+  const evaluatePasswordStrength = (value: string) => {
+    setEvaluating(true);
+    setScore(null);
+    clearTimeout(timeoutRef.current);
+
+    setTimeout(() => {
+      const passwordStrength = zxcvbn(value);
+      setScore(passwordStrength.score);
+    }, 500);
+  };
+
   // Overriding formik's handleChange function
   const customHandleChange =
     (handleChangeFn: (e: ChangeEvent<any>) => void) =>
     (e: ChangeEvent<HTMLInputElement>) => {
       handleChangeFn(e);
       setServerMsg("");
+      setEvaluating(true); // Mostrar el StyledPwdSpinner inmediatamente
+      setScore(null);
+      clearTimeout(timeoutRef.current);
+
+      timeoutRef.current = setTimeout(() => {
+        evaluatePasswordStrength(e.target.value);
+        setEvaluating(false);
+      }, 500);
     };
 
   const handleSubmit = async (
@@ -362,8 +405,18 @@ const Register = () => {
 
               {/* PASSWORD */}
               <StyledWrapper>
-                <StyledLabel>{t("register.password")}</StyledLabel>
-                <StyledInputWrapper></StyledInputWrapper>
+                <StyledLabel>
+                  {t("register.password")}
+
+                  {isEvaluating ? (
+                    <StyledPwdSpinner
+                      src="/images/spinner-light.svg"
+                      alt="Loading"
+                    />
+                  ) : (
+                    score !== null && <SecurityPwd score={score} />
+                  )}
+                </StyledLabel>
                 <StyledInputWrapper>
                   <StyledInput
                     type={showPassword ? "text" : "password"}

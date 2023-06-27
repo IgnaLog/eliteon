@@ -1,0 +1,36 @@
+import styled from "styled-components";
+import { BiSolidCheckCircle } from "react-icons/bi";
+import { RiAlertFill } from "react-icons/ri";
+import { MdDoNotDisturbOn } from "react-icons/md";
+
+const StyledLayoutFigure = styled.div`
+  margin-right: 0.5rem !important;
+  display: inline-flex !important;
+`;
+
+const StyledFigured = styled.figure`
+  display: inline-flex;
+  margin: 0;
+`;
+
+type Props = {
+  score: number;
+};
+
+const Figure = ({ score }: Props) => {
+  const showFigure = (score: number) => {
+    if (score < 2) {
+      return <MdDoNotDisturbOn size={18} />;
+    } else if (score <= 3) {
+      return <RiAlertFill size={18} />;
+    } else {
+      return <BiSolidCheckCircle size={18} />;
+    }
+  };
+  return (
+    <StyledLayoutFigure>
+      <StyledFigured>{showFigure(score)}</StyledFigured>
+    </StyledLayoutFigure>
+  );
+};
+export default Figure;

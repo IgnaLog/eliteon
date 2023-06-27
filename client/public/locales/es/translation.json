@@ -30,6 +30,9 @@
         "serverMsgRegistrationFailed": "Registro fallido",
         "yupEmail": "Introduce un correo electrónico válido.",
         "yupPassword": "Las contraseñas deben tener al menos 8 caracteres.",
-        "terms": " Al crear una cuenta, aceptas los <a href='/terms-of-service'>Términos del servicio</a> de Eliteon, incluidos los <a href='/additional-terms'>Términos adicionales</a> y la <a href='/privacy-policy'>Política de privacidad</a>."
+        "terms": " Al crear una cuenta, aceptas los <a href='/terms-of-service'>Términos del servicio</a> de Eliteon, incluidos los <a href='/additional-terms'>Términos adicionales</a> y la <a href='/privacy-policy'>Política de privacidad</a>.",
+        "weak": "Débil",
+        "normal": "Normal",
+        "safe": "Segura"
     }
 }
