@@ -25,6 +25,7 @@
     "react-icons": "^4.9.0",
     "react-router-dom": "^6.11.2",
     "styled-components": "^5.3.11",
+    "validator": "^13.9.0",
     "yup": "^1.2.0",
     "zustand": "^4.3.8",
     "zxcvbn": "^4.4.2"
@@ -33,6 +34,7 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",
+    "@types/validator": "^13.7.17",
     "@types/zxcvbn": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
     "@typescript-eslint/parser": "^5.57.1",

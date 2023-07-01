@@ -11,14 +11,14 @@ if (import.meta.env.PROD) {
 }
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <Suspense fallback="...loading translations">
-      <GlobalStyles />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/*" element={<App />} />
-        </Routes>
-      </BrowserRouter>
-    </Suspense>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Suspense fallback="...loading translations">
+    <GlobalStyles />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/*" element={<App />} />
+      </Routes>
+    </BrowserRouter>
+  </Suspense>
+  // </React.StrictMode>
 );
