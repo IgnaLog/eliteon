@@ -1,4 +1,11 @@
-import { useState, ChangeEvent, useRef, MouseEvent } from "react";
+import {
+  useState,
+  ChangeEvent,
+  useRef,
+  MouseEvent,
+  FocusEvent,
+  useEffect,
+} from "react";
 import * as Yup from "yup";
 import { registerRequest } from "../../api/authService";
 import {
@@ -271,6 +278,8 @@ type FormValues = {
   password: string;
 };
 
+var emailsErrors = "";
+
 const Register = () => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
@@ -278,6 +287,8 @@ const Register = () => {
   const [score, setScore] = useState<number | null>(null);
   const [isPwdEvaluating, setIsPwdEvaluating] = useState(false);
   const [isEmailEvaluating, setIsEmailEvaluating] = useState(false);
+  const [currentField, setCurrentField] = useState("");
+  const [previousErrors, setPreviousErrors] = useState<Partial<FormValues>>({});
 
   const inputEmailRef = useRef<HTMLInputElement>(null);
   const inputPwdRef = useRef<HTMLInputElement>(null);
@@ -314,11 +325,13 @@ const Register = () => {
 
   const handleFocusEmailField = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
+    setCurrentField("email");
     inputEmailRef.current?.focus();
   };
 
   const handleFocusPwdField = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
+    setCurrentField("password");
     inputPwdRef.current?.focus();
   };
 
@@ -347,17 +360,50 @@ const Register = () => {
   //   }, 400);
   // };
 
+  const handleBlurEmailField = (e: MouseEvent<HTMLDivElement>) => {
+    console.log("986");
+    e.preventDefault();
+    setCurrentField("");
+  };
+
+  const handleBlurPwdField = (e: MouseEvent<HTMLDivElement>) => {
+    console.log("986");
+    e.preventDefault();
+    setCurrentField("");
+  };
+
   // Overriding formik's handleChange function
   const customHandleChange =
     (handleChangeFn: (e: ChangeEvent<any>) => void) =>
     (e: ChangeEvent<HTMLInputElement>) => {
+      // setCurrentField(e.target.name);
       handleChangeFn(e);
       setServerMsg("");
-      if (e.target.id === "password") {
-        // evaluatePasswordStrength(e.target.value);
-      } else if (e.target.id === "email") {
-        // evaluateValidEmail();
-      }
+      // if (e.target.id === "password") {
+      //   setCurrentField("password");
+      //   setIsPwdEvaluating(true);
+      // } else if (e.target.id === "email") {
+      //   console.log("first");
+      //   setCurrentField("email");
+      //   setIsEmailEvaluating(true);
+      // }
+    };
+
+  const customHandleBlur =
+    (handleBlurFn: (e: FocusEvent<any>) => void) =>
+    (e: FocusEvent<HTMLInputElement>) => {
+      setCurrentField("");
+      handleBlurFn(e);
+      console.log("986");
+
+      // if (e.target.id === "password") {
+      //   setCurrentField("");
+      //   setIsPwdEvaluating(false);
+      // } else if (e.target.id === "email") {
+      //   console.log("second");
+      //   setCurrentField("");
+      //   setIsEmailEvaluating(false);
+      // }
     };
 
   const handleSubmit = async (
@@ -393,6 +439,7 @@ const Register = () => {
 
   const validate = async (values: FormValues) => {
     const errors: Partial<FormValues> = {};
+
     const validateEmail = async () => {
       try {
         await signUpSchema.validate(
@@ -403,8 +450,17 @@ const Register = () => {
         error.inner.forEach((err: Yup.ValidationError) => {
           if (err.path === "email") {
             errors.email = err.message;
+            setPreviousErrors((prev) => ({ ...prev, email: err.message }));
+          }
+          if (err.path === "password") {
+            errors.password = previousErrors.password;
           }
         });
+      } finally {
+        console.log("errors.email: " + errors.email);
+        if (!errors.email) {
+          setPreviousErrors((prev) => ({ ...prev, email: "" }));
+        }
       }
     };
     const validatePassword = async () => {
@@ -417,14 +473,24 @@ const Register = () => {
         setScore(passwordStrength.score);
       } catch (error: any) {
         error.inner.forEach((err: Yup.ValidationError) => {
+          console.log(JSON.stringify(error, null, 2));
           if (err.path === "password") {
             errors.password = err.message;
+            setPreviousErrors((prev) => ({ ...prev, password: err.message }));
+          }
+          if (err.path === "email") {
+            console.log("previousErrors.email: " + previousErrors.email);
+            errors.email = previousErrors.email;
           }
         });
+      } finally {
+        if (!errors.password) {
+          setPreviousErrors((prev) => ({ ...prev, password: "" }));
+        }
       }
     };
 
-    if (values.email) {
+    if (values.email && currentField === "email") {
       setIsEmailEvaluating(true);
       clearTimeout(timeoutEmailRef.current);
       await new Promise<void>((resolve) => {
@@ -435,12 +501,14 @@ const Register = () => {
         }, 400);
       });
     }
-    if (values.password) {
+    if (values.password && currentField === "password") {
+      setIsPwdEvaluating(true);
       setScore(null);
       clearTimeout(timeoutPwdRef.current);
       await new Promise<void>((resolve) => {
         timeoutPwdRef.current = setTimeout(async () => {
           await validatePassword();
+          setIsPwdEvaluating(false);
           resolve();
         }, 400);
       });
@@ -488,10 +556,10 @@ const Register = () => {
         {({
           values,
           errors,
-
           isSubmitting,
           handleChange,
           setFieldValue,
+          handleBlur,
         }) => (
           <StyledForm>
             <div style={{ marginBottom: "5px", textAlign: "left" }}>
@@ -517,6 +585,8 @@ const Register = () => {
                     name="email"
                     value={values.email}
                     onChange={customHandleChange(handleChange)}
+                    onBlur={handleBlurEmailField}
+                    onFocus={handleFocusEmailField}
                     placeholder={t("register.emailPlaceholder")}
                     innerRef={inputEmailRef}
                   />
@@ -553,7 +623,9 @@ const Register = () => {
                     innerRef={inputPwdRef}
                     value={values.password}
                     onChange={customHandleChange(handleChange)}
+                    onBlur={handleBlurPwdField}
                     autoComplete="off"
+                    onFocus={handleFocusPwdField}
                     placeholder={t("register.passwordPlaceholder")}
                   />
                   <StyledSideButton
