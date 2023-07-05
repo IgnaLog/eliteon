@@ -1,31 +1,15 @@
-import {
-  useState,
-  ChangeEvent,
-  useRef,
-  MouseEvent,
-  FocusEvent,
-  useEffect,
-} from "react";
+import { useState, ChangeEvent, useRef, MouseEvent, FocusEvent } from "react";
 import * as Yup from "yup";
 import { registerRequest } from "../../api/authService";
-import {
-  ErrorMessage,
-  Field,
-  Form,
-  Formik,
-  FormikErrors,
-  FormikHelpers,
-  FormikProps,
-  FormikTouched,
-  validateYupSchema,
-} from "formik";
-import styled, { css } from "styled-components";
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
+import styled from "styled-components";
 import { LuEyeOff, LuEye, LuX } from "react-icons/lu";
 import { Trans, useTranslation } from "react-i18next";
 import zxcvbn from "zxcvbn";
 import SecurityPwd from "../components/securityPwd/SecurityPwd";
 import ValidateEmail from "../components/validateEmail/ValidateEmail";
 import isEmailValidator from "validator/lib/isEmail";
+import PwdErrorMessage from "../components/PwdErrorMessage";
 
 const StyledSection = styled.section`
   max-width: 42.8rem;
@@ -220,11 +204,36 @@ const StyledSideButton = styled.div<{ show: any }>`
   }
 `;
 
+type ErrorMessageProps = {
+  error: string;
+  score: number;
+};
+
+const StyledPwdErrorMessage = styled(ErrorMessage)<{ score: number | null }>`
+  margin: 0.25rem 0px 0px;
+  padding: 0.2rem 0px;
+  text-align: right;
+  color: "rgb(250, 130, 106)";
+  color: ${({ score }) => {
+    if (score && score > 1) {
+      return "rgb(127, 119, 131)";
+    } else {
+      return "rgb(250, 130, 106)";
+    }
+  }};
+  font-family: Cerebri Regular, sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: -0.01rem;
+  line-height: 1.8rem;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+`;
+
 const StyledErrorMessage = styled(ErrorMessage)`
   margin: 0.25rem 0px 0px;
   padding: 0.2rem 0px;
   text-align: right;
-  color: rgb(250, 130, 106);
+  color: "rgb(250, 130, 106)";
   font-family: Cerebri Regular, sans-serif;
   font-size: 1.4rem;
   letter-spacing: -0.01rem;
@@ -278,8 +287,6 @@ type FormValues = {
   password: string;
 };
 
-var emailsErrors = "";
-
 const Register = () => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
@@ -308,31 +315,16 @@ const Register = () => {
       ),
     password: Yup.string()
       .required("")
-      .test(
-        "password-strength",
-        "La contraseña no es lo suficientemente fuerte",
-        (value) => {
-          const { score } = zxcvbn(value);
-          return score >= 3;
-        }
+      .min(8, "*Las contraseñas deben tener al menos 8 caracteres.")
+      .matches(
+        /^[\x00-\x7F]*$/,
+        "La contraseña solo puede contener caracteres ASCII"
       ),
   });
 
   const initialValues: FormValues = {
     email: "",
     password: "",
-  };
-
-  const handleFocusEmailField = (e: MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setCurrentField("email");
-    inputEmailRef.current?.focus();
-  };
-
-  const handleFocusPwdField = (e: MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setCurrentField("password");
-    inputPwdRef.current?.focus();
   };
 
   const handleClearEmail = (setFieldValue: any) => {
@@ -349,25 +341,24 @@ const Register = () => {
     setShowPassword(!showPassword);
   };
 
-  // const evaluatePasswordStrength = (value: string) => {
-  //   setPwdEvaluating(true);
-  //   setScore(null);
-  //   clearTimeout(timeoutRef.current);
-  //   timeoutRef.current = setTimeout(() => {
-  //     const passwordStrength = zxcvbn(value);
-  //     setScore(passwordStrength.score);
-  //     setPwdEvaluating(false);
-  //   }, 400);
-  // };
+  const handleFocusEmailField = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setCurrentField("email");
+    inputEmailRef.current?.focus();
+  };
+
+  const handleFocusPwdField = (e: MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setCurrentField("password");
+    inputPwdRef.current?.focus();
+  };
 
   const handleBlurEmailField = (e: MouseEvent<HTMLDivElement>) => {
-    console.log("986");
     e.preventDefault();
     setCurrentField("");
   };
 
   const handleBlurPwdField = (e: MouseEvent<HTMLDivElement>) => {
-    console.log("986");
     e.preventDefault();
     setCurrentField("");
   };
@@ -376,34 +367,8 @@ const Register = () => {
   const customHandleChange =
     (handleChangeFn: (e: ChangeEvent<any>) => void) =>
     (e: ChangeEvent<HTMLInputElement>) => {
-      // setCurrentField(e.target.name);
       handleChangeFn(e);
       setServerMsg("");
-      // if (e.target.id === "password") {
-      //   setCurrentField("password");
-      //   setIsPwdEvaluating(true);
-      // } else if (e.target.id === "email") {
-      //   console.log("first");
-      //   setCurrentField("email");
-      //   setIsEmailEvaluating(true);
-      // }
-    };
-
-  const customHandleBlur =
-    (handleBlurFn: (e: FocusEvent<any>) => void) =>
-    (e: FocusEvent<HTMLInputElement>) => {
-      setCurrentField("");
-      handleBlurFn(e);
-      console.log("986");
-
-      // if (e.target.id === "password") {
-      //   setCurrentField("");
-      //   setIsPwdEvaluating(false);
-      // } else if (e.target.id === "email") {
-      //   console.log("second");
-      //   setCurrentField("");
-      //   setIsEmailEvaluating(false);
-      // }
     };
 
   const handleSubmit = async (
@@ -448,49 +413,77 @@ const Register = () => {
         );
       } catch (error: any) {
         error.inner.forEach((err: Yup.ValidationError) => {
+          console.log(JSON.stringify(error, null, 2));
           if (err.path === "email") {
             errors.email = err.message;
             setPreviousErrors((prev) => ({ ...prev, email: err.message }));
+            console.log("previousErrors.email: " + previousErrors.email);
           }
           if (err.path === "password") {
             errors.password = previousErrors.password;
           }
         });
       } finally {
-        console.log("errors.email: " + errors.email);
+        console.log("finally errors.email: " + errors.email);
         if (!errors.email) {
           setPreviousErrors((prev) => ({ ...prev, email: "" }));
         }
       }
     };
     const validatePassword = async () => {
+      const { score } = zxcvbn(values.password);
+      setScore(score);
       try {
         await signUpSchema.validate(
           { password: values.password },
           { abortEarly: false }
         );
-        const passwordStrength = zxcvbn(values.password);
-        setScore(passwordStrength.score);
       } catch (error: any) {
         error.inner.forEach((err: Yup.ValidationError) => {
-          console.log(JSON.stringify(error, null, 2));
           if (err.path === "password") {
             errors.password = err.message;
             setPreviousErrors((prev) => ({ ...prev, password: err.message }));
+            setScore(0);
           }
           if (err.path === "email") {
-            console.log("previousErrors.email: " + previousErrors.email);
             errors.email = previousErrors.email;
           }
         });
       } finally {
         if (!errors.password) {
-          setPreviousErrors((prev) => ({ ...prev, password: "" }));
+          switch (score) {
+            case 0:
+              errors.password =
+                "*Los patrones del teclado son fáciles de adivinar.";
+              break;
+            case 1:
+              errors.password =
+                "*Esta es una contraseña muy común. Añade más palabras o caracteres.";
+              break;
+            case 2:
+              errors.password =
+                "*Tu contraseña es vulnerable, por tu seguridad, te recomendamos mejorarla.";
+              break;
+            case 3:
+              errors.password =
+                "Esa contraseña es buena, pero puedes hacerla aún mejor.";
+              break;
+            case 4:
+              errors.password =
+                "¡Estupenda contraseña! Úsala solo aquí para ayudar a proteger tu cuenta.";
+              break;
+            default:
+              errors.password =
+                "Error de validación. Prueba con otra contraseña.";
+              break;
+          }
+          setPreviousErrors((prev) => ({ ...prev, password: errors.password }));
         }
       }
     };
 
-    if (values.email && currentField === "email") {
+    if (currentField === "email") {
+      console.log("2");
       setIsEmailEvaluating(true);
       clearTimeout(timeoutEmailRef.current);
       await new Promise<void>((resolve) => {
@@ -501,7 +494,7 @@ const Register = () => {
         }, 400);
       });
     }
-    if (values.password && currentField === "password") {
+    if (currentField === "password") {
       setIsPwdEvaluating(true);
       setScore(null);
       clearTimeout(timeoutPwdRef.current);
@@ -516,31 +509,6 @@ const Register = () => {
     return errors;
   };
 
-  // const validateEmail = async (value: string) => {
-  //   setValidationErrors({});
-  //   setIsEmailEvaluating(true);
-  //   clearTimeout(timeoutRef.current);
-
-  //   try {
-  //     timeoutRef.current = setTimeout(async () => {
-  //       await signUpSchema.validate({ email: value }, { abortEarly: false });
-  //       setIsEmailEvaluating(false);
-  //     }, 400);
-  //   } catch (error) {
-  //     if (error instanceof Yup.ValidationError) {
-  //       const formattedErrors: { [key: string]: string } = {};
-  //       error.inner.forEach((err) => {
-  //         if (err.path) {
-  //           formattedErrors[err.path] = err.message;
-  //         }
-  //       });
-  //       setValidationErrors(formattedErrors);
-  //     }
-  //   }
-  //   setIsEmailEvaluating(false);
-  //   return undefined;
-  // };
-
   return (
     <StyledSection>
       <StyledTitle>{t("register.title")}</StyledTitle>
@@ -549,18 +517,10 @@ const Register = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        // validationSchema={signUpSchema}
         validate={validate}
         initialTouched={{ email: true, password: true }}
       >
-        {({
-          values,
-          errors,
-          isSubmitting,
-          handleChange,
-          setFieldValue,
-          handleBlur,
-        }) => (
+        {({ values, errors, isSubmitting, handleChange, setFieldValue }) => (
           <StyledForm>
             <div style={{ marginBottom: "5px", textAlign: "left" }}>
               {/* EMAIL */}
@@ -640,7 +600,12 @@ const Register = () => {
                     )}
                   </StyledSideButton>
                 </StyledInputWrapper>
-                <StyledErrorMessage name="password" component="p" />
+
+                <StyledPwdErrorMessage
+                  name="password"
+                  score={score}
+                  component="p"
+                />
               </StyledWrapper>
             </div>
 
