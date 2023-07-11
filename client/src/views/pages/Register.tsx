@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useRef, MouseEvent, FocusEvent } from "react";
+import { useState, ChangeEvent, useRef, MouseEvent } from "react";
 import * as Yup from "yup";
 import { registerRequest } from "../../api/authService";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
@@ -9,7 +9,6 @@ import zxcvbn from "zxcvbn";
 import SecurityPwd from "../components/securityPwd/SecurityPwd";
 import ValidateEmail from "../components/validateEmail/ValidateEmail";
 import isEmailValidator from "validator/lib/isEmail";
-import PwdErrorMessage from "../components/PwdErrorMessage";
 
 const StyledSection = styled.section`
   max-width: 42.8rem;
@@ -133,18 +132,7 @@ const StyledLabel = styled.label`
   color: rgba(242, 241, 243, 1);
 `;
 
-/* border-color: ${({ error }) => {
-    console.log("error: " + error);
-    if (error === 1) {
-      return "rgb(250, 130, 106)";
-    } else if (error === 0) {
-      return "rgb(242, 241, 243)";
-    } else {
-      return "currentColor";
-    }
-  }}; */
-
-const StyledInput = styled(Field)`
+const StyledInput = styled(Field)<{ valid: boolean }>`
   width: 100%;
   padding: 1.4rem 4.2rem 1.4rem 1.6rem;
   border: 1px solid rgb(63, 59, 69);
@@ -158,11 +146,24 @@ const StyledInput = styled(Field)`
   transition: all 0.2s ease-in-out 0s;
 
   &:hover {
-    border-color: rgb(129, 122, 138);
+    border-color: ${({ valid }) => {
+      if (valid) {
+        return "rgb(129, 122, 138)";
+      } else {
+        return "rgb(250, 130, 106)";
+      }
+    }};
     transition: none 0s ease 0s;
   }
 
   &:focus {
+    border-color: ${({ valid }) => {
+      if (valid) {
+        return "rgb(129, 122, 138)";
+      } else {
+        return "rgb(250, 130, 106)";
+      }
+    }};
     border-width: 2px !important;
     outline: none;
   }
@@ -204,36 +205,17 @@ const StyledSideButton = styled.div<{ show: any }>`
   }
 `;
 
-type ErrorMessageProps = {
-  error: string;
-  score: number;
-};
-
-const StyledPwdErrorMessage = styled(ErrorMessage)<{ score: number | null }>`
+const StyledErrorMessage = styled(ErrorMessage)<{ valid: number }>`
   margin: 0.25rem 0px 0px;
   padding: 0.2rem 0px;
   text-align: right;
-  color: "rgb(250, 130, 106)";
-  color: ${({ score }) => {
-    if (score && score > 1) {
+  color: ${({ valid }) => {
+    if (valid) {
       return "rgb(127, 119, 131)";
     } else {
       return "rgb(250, 130, 106)";
     }
   }};
-  font-family: Cerebri Regular, sans-serif;
-  font-size: 1.4rem;
-  letter-spacing: -0.01rem;
-  line-height: 1.8rem;
-  -webkit-box-pack: end;
-  justify-content: flex-end;
-`;
-
-const StyledErrorMessage = styled(ErrorMessage)`
-  margin: 0.25rem 0px 0px;
-  padding: 0.2rem 0px;
-  text-align: right;
-  color: "rgb(250, 130, 106)";
   font-family: Cerebri Regular, sans-serif;
   font-size: 1.4rem;
   letter-spacing: -0.01rem;
@@ -296,7 +278,8 @@ const Register = () => {
   const [isEmailEvaluating, setIsEmailEvaluating] = useState(false);
   const [currentField, setCurrentField] = useState("");
   const [previousErrors, setPreviousErrors] = useState<Partial<FormValues>>({});
-
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPwdValid, setIsPwdValid] = useState(true);
   const inputEmailRef = useRef<HTMLInputElement>(null);
   const inputPwdRef = useRef<HTMLInputElement>(null);
   const timeoutEmailRef = useRef<number | undefined>(undefined);
@@ -307,7 +290,7 @@ const Register = () => {
       .required("")
       .test(
         "is-valid",
-        (message) => `${message.path} is invalid`,
+        () => `*Introduce un correo electrónico válido.`,
         (value) =>
           value
             ? isEmailValidator(value)
@@ -413,26 +396,27 @@ const Register = () => {
         );
       } catch (error: any) {
         error.inner.forEach((err: Yup.ValidationError) => {
-          console.log(JSON.stringify(error, null, 2));
           if (err.path === "email") {
             errors.email = err.message;
             setPreviousErrors((prev) => ({ ...prev, email: err.message }));
-            console.log("previousErrors.email: " + previousErrors.email);
+            setIsEmailValid(false);
           }
           if (err.path === "password") {
             errors.password = previousErrors.password;
           }
         });
       } finally {
-        console.log("finally errors.email: " + errors.email);
         if (!errors.email) {
-          setPreviousErrors((prev) => ({ ...prev, email: "" }));
+          setIsEmailValid(true);
+          errors.email =
+            "Tendrás que verificar que eres el propietario de esta cuenta de correo electrónico.";
+          setPreviousErrors((prev) => ({ ...prev, email: errors.email }));
         }
       }
     };
     const validatePassword = async () => {
-      const { score } = zxcvbn(values.password);
-      setScore(score);
+      const scoreVal = zxcvbn(values.password).score;
+      setScore(scoreVal);
       try {
         await signUpSchema.validate(
           { password: values.password },
@@ -444,6 +428,7 @@ const Register = () => {
             errors.password = err.message;
             setPreviousErrors((prev) => ({ ...prev, password: err.message }));
             setScore(0);
+            setIsPwdValid(false);
           }
           if (err.path === "email") {
             errors.email = previousErrors.email;
@@ -451,7 +436,8 @@ const Register = () => {
         });
       } finally {
         if (!errors.password) {
-          switch (score) {
+          scoreVal < 2 ? setIsPwdValid(false) : setIsPwdValid(true);
+          switch (scoreVal) {
             case 0:
               errors.password =
                 "*Los patrones del teclado son fáciles de adivinar.";
@@ -483,7 +469,6 @@ const Register = () => {
     };
 
     if (currentField === "email") {
-      console.log("2");
       setIsEmailEvaluating(true);
       clearTimeout(timeoutEmailRef.current);
       await new Promise<void>((resolve) => {
@@ -520,7 +505,7 @@ const Register = () => {
         validate={validate}
         initialTouched={{ email: true, password: true }}
       >
-        {({ values, errors, isSubmitting, handleChange, setFieldValue }) => (
+        {({ values, isSubmitting, handleChange, setFieldValue }) => (
           <StyledForm>
             <div style={{ marginBottom: "5px", textAlign: "left" }}>
               {/* EMAIL */}
@@ -534,7 +519,7 @@ const Register = () => {
                     />
                   ) : (
                     values.email !== "" && (
-                      <ValidateEmail valid={!errors.email} />
+                      <ValidateEmail valid={isEmailValid} />
                     )
                   )}
                 </StyledLabel>
@@ -549,6 +534,7 @@ const Register = () => {
                     onFocus={handleFocusEmailField}
                     placeholder={t("register.emailPlaceholder")}
                     innerRef={inputEmailRef}
+                    valid={isEmailValid ? 1 : 0}
                   />
                   <StyledSideButton
                     show={values.email !== "" ? 1 : 0}
@@ -558,7 +544,11 @@ const Register = () => {
                     <LuX size={18} />
                   </StyledSideButton>
                 </StyledInputWrapper>
-                <StyledErrorMessage name="email" component="p" />
+                <StyledErrorMessage
+                  valid={isEmailValid ? 1 : 0}
+                  name="email"
+                  component="p"
+                />
               </StyledWrapper>
 
               {/* PASSWORD */}
@@ -587,6 +577,7 @@ const Register = () => {
                     autoComplete="off"
                     onFocus={handleFocusPwdField}
                     placeholder={t("register.passwordPlaceholder")}
+                    valid={isPwdValid ? 1 : 0}
                   />
                   <StyledSideButton
                     show={values.password !== "" ? 1 : 0}
@@ -601,9 +592,9 @@ const Register = () => {
                   </StyledSideButton>
                 </StyledInputWrapper>
 
-                <StyledPwdErrorMessage
+                <StyledErrorMessage
                   name="password"
-                  score={score}
+                  valid={isPwdValid ? 1 : 0}
                   component="p"
                 />
               </StyledWrapper>
