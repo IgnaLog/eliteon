@@ -1,0 +1,43 @@
+import styled from "styled-components";
+import { Trans, useTranslation } from "react-i18next";
+
+const StyledRegistered = styled.div`
+  margin-top: 25px;
+  span,
+  a {
+    font-family: cerebri, sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: -0.1px;
+    color: white;
+  }
+
+  span {
+    color: rgb(173, 174, 181);
+  }
+
+  a,
+  a:visited,
+  a:hover,
+  a:focus,
+  a:active {
+    text-decoration: none;
+    cursor: pointer;
+  }
+`;
+
+const AlreadyRegistered = () => {
+  const { t } = useTranslation();
+  return (
+    <StyledRegistered>
+      <Trans
+        t={t}
+        i18nKey="register.alreadyRegistered"
+        components={{ a: <a />, span: <span /> }}
+      >
+        <span>Already registered?</span>
+        <a href="/login"> Sign in</a>
+      </Trans>
+    </StyledRegistered>
+  );
+};
+export default AlreadyRegistered;

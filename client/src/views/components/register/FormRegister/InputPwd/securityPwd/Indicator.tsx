@@ -1,6 +1,6 @@
-import Description from "./components/Description";
-import Figure from "./components/Figure";
-import ProgressBar from "./components/ProgressBar";
+import Description from "./Description";
+import Figure from "./Figure";
+import ProgressBar from "./ProgressBar";
 import styled from "styled-components";
 
 const StyledPwdIndicator = styled.div<{ color: string }>`

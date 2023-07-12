@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import Indicator from "./components/Indicator";
+import Indicator from "./Indicator";
 
 type Props = {
-  score: number;
+  score: number | null;
 };
 
 const SecurityPwd = ({ score }: Props) => {

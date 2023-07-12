@@ -7,7 +7,7 @@ import { LuEyeOff, LuEye, LuX } from "react-icons/lu";
 import { Trans, useTranslation } from "react-i18next";
 import zxcvbn from "zxcvbn";
 import SecurityPwd from "../components/securityPwd/SecurityPwd";
-import ValidateEmail from "../components/validateEmail/ValidateEmail";
+import ValidateEmail from "../components/register/InputEmail/validateEmail/ValidateEmail";
 import isEmailValidator from "validator/lib/isEmail";
 
 const StyledSection = styled.section`
@@ -135,7 +135,14 @@ const StyledLabel = styled.label`
 const StyledInput = styled(Field)<{ valid: boolean }>`
   width: 100%;
   padding: 1.4rem 4.2rem 1.4rem 1.6rem;
-  border: 1px solid rgb(63, 59, 69);
+  border: 1px solid;
+  border-color: ${({ valid }) => {
+    if (valid) {
+      return "rgb(63, 59, 69)";
+    } else {
+      return "rgb(250, 130, 106)";
+    }
+  }};
   line-height: 2rem;
   color: rgb(242, 241, 243);
   background: rgb(32, 30, 35);
@@ -287,7 +294,7 @@ const Register = () => {
 
   const signUpSchema = Yup.object().shape({
     email: Yup.string()
-      .required("")
+      .required("*Introduce un correo electrónico válido.")
       .test(
         "is-valid",
         () => `*Introduce un correo electrónico válido.`,
@@ -359,6 +366,7 @@ const Register = () => {
     { resetForm, setSubmitting }: FormikHelpers<FormValues>
   ) => {
     try {
+      setSubmitting(true);
       await registerRequest(values);
       resetForm();
     } catch (err: any) {
@@ -494,6 +502,22 @@ const Register = () => {
     return errors;
   };
 
+  const disableSubmitButton = (
+    isSubmitting: boolean,
+    email: string,
+    pwd: string
+  ): boolean => {
+    return isSubmitting ||
+      isEmailEvaluating ||
+      isPwdEvaluating ||
+      !email ||
+      !pwd
+      ? true
+      : isEmailValid && isPwdValid
+      ? false
+      : true;
+  };
+
   return (
     <StyledSection>
       <StyledTitle>{t("register.title")}</StyledTitle>
@@ -562,7 +586,8 @@ const Register = () => {
                       alt="Loading"
                     />
                   ) : (
-                    score !== null && <SecurityPwd score={score} />
+                    score !== null &&
+                    values.password !== "" && <SecurityPwd score={score} />
                   )}
                 </StyledLabel>
                 <StyledInputWrapper>
@@ -613,7 +638,14 @@ const Register = () => {
             </div>
 
             {/* BUTTON SUBMITTING */}
-            <StyledButton type="submit" disabled={isSubmitting}>
+            <StyledButton
+              type="submit"
+              disabled={disableSubmitButton(
+                isSubmitting,
+                values.email,
+                values.password
+              )}
+            >
               {isSubmitting && (
                 <LoadingSpinner src="/images/spinner-light.svg" alt="Loading" />
               )}
