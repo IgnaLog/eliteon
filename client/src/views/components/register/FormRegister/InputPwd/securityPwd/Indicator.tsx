@@ -3,7 +3,7 @@ import Figure from "./Figure";
 import ProgressBar from "./ProgressBar";
 import styled from "styled-components";
 
-const StyledPwdIndicator = styled.div<{ color: string }>`
+const PwdIndicator = styled.div<{ color: string }>`
   display: flex !important;
   -webkit-box-align: center !important;
   align-items: center !important;
@@ -27,11 +27,11 @@ const Indicator = ({ percentage, description, score }: Props) => {
     }
   };
   return (
-    <StyledPwdIndicator color={evaluateColor(score)}>
+    <PwdIndicator color={evaluateColor(score)}>
       <Figure score={score} />
       {score >= 2 && <Description description={description} />}
       <ProgressBar percentage={percentage} />
-    </StyledPwdIndicator>
+    </PwdIndicator>
   );
 };
 export default Indicator;

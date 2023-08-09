@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 import { LuX } from "react-icons/lu";
 import ValidateEmail from "./validateEmail/ValidateEmail";
 
-const StyledWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 1.5rem;
 `;
 
-const StyledLabel = styled.label`
+const Label = styled.label`
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
@@ -22,7 +22,7 @@ const StyledLabel = styled.label`
   color: rgba(242, 241, 243, 1);
 `;
 
-const StyledSpinner = styled.img`
+const Spinner = styled.img`
   width: 5%;
   height: 5%;
   user-select: none;
@@ -39,12 +39,12 @@ const StyledSpinner = styled.img`
   }
 `;
 
-const StyledInputWrapper = styled.div`
+const InputWrapper = styled.div`
   position: relative;
   transition: max-height 0.4s ease-out 0s, opacity 0.8s ease 0s;
 `;
 
-const StyledInput = styled(Field)<{ valid: boolean }>`
+const Input = styled(Field)<{ valid: boolean }>`
   width: 100%;
   padding: 1.4rem 4.2rem 1.4rem 1.6rem;
   border: 1px solid;
@@ -93,7 +93,7 @@ const StyledInput = styled(Field)<{ valid: boolean }>`
   }
 `;
 
-const StyledSideButton = styled.div<{ show: any }>`
+const SideButton = styled.div<{ show: any }>`
   height: 70%;
   padding: 1.4rem 0.8rem;
   position: absolute;
@@ -162,17 +162,17 @@ const InputEmail = ({
   const { t } = useTranslation();
 
   return (
-    <StyledWrapper>
-      <StyledLabel>
+    <Wrapper>
+      <Label>
         {t("register.email")}
         {isEmailEvaluating ? (
-          <StyledSpinner src="/images/spinner-light.svg" alt="Loading" />
+          <Spinner src="/images/spinner-light.svg" alt="Loading" />
         ) : (
           value !== "" && <ValidateEmail valid={isEmailValid} />
         )}
-      </StyledLabel>
-      <StyledInputWrapper>
-        <StyledInput
+      </Label>
+      <InputWrapper>
+        <Input
           type="text"
           id="email"
           name="email"
@@ -184,20 +184,20 @@ const InputEmail = ({
           innerRef={inputRef}
           valid={isEmailValid ? 1 : 0}
         />
-        <StyledSideButton
+        <SideButton
           show={value !== "" ? 1 : 0}
           onClick={handleClick}
           onMouseDown={handleFocus}
         >
           <LuX size={18} />
-        </StyledSideButton>
-      </StyledInputWrapper>
+        </SideButton>
+      </InputWrapper>
       <StyledErrorMessage
         valid={isEmailValid ? 1 : 0}
         name="email"
         component="p"
       />
-    </StyledWrapper>
+    </Wrapper>
   );
 };
 export default InputEmail;

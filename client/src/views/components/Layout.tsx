@@ -18,9 +18,7 @@ const Layout = ({}) => {
   return (
     <>
       <Navbar toggleSignup={toggleSignup} toggleLogin={toggleLogin} />
-
       <Register isSignupOpen={isSignupOpen} toggleSignup={toggleSignup} />
-
       <Main />
       <Footer />
     </>

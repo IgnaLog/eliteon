@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
-const StyledButton = styled.button`
+const Button = styled.button`
   position: relative;
   padding: 1rem 1.8rem;
   border: 0.1rem solid rgb(69, 255, 255);
@@ -22,7 +22,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const StyledContentButton = styled.div<{ show: any }>`
+const ContentButton = styled.div<{ show: any }>`
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
@@ -86,14 +86,14 @@ const ButtonSubmit = ({
       : true;
   };
   return (
-    <StyledButton type="submit" disabled={disableSubmitButton()}>
+    <Button type="submit" disabled={disableSubmitButton()}>
       {isSubmitting && (
         <LoadingSpinner src="/images/spinner-light.svg" alt="Loading" />
       )}
-      <StyledContentButton show={!isSubmitting ? 1 : 0}>
+      <ContentButton show={!isSubmitting ? 1 : 0}>
         {t("register.submit")}
-      </StyledContentButton>
-    </StyledButton>
+      </ContentButton>
+    </Button>
   );
 };
 

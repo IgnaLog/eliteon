@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Trans, useTranslation } from "react-i18next";
 
-const StyledRegistered = styled.div`
+const Container = styled.div`
   margin-top: 25px;
   span,
   a {
@@ -28,7 +28,7 @@ const StyledRegistered = styled.div`
 const AlreadyRegistered = () => {
   const { t } = useTranslation();
   return (
-    <StyledRegistered>
+    <Container>
       <Trans
         t={t}
         i18nKey="register.alreadyRegistered"
@@ -37,7 +37,7 @@ const AlreadyRegistered = () => {
         <span>Already registered?</span>
         <a href="/login"> Sign in</a>
       </Trans>
-    </StyledRegistered>
+    </Container>
   );
 };
 export default AlreadyRegistered;

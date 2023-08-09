@@ -3,12 +3,12 @@ import { BiSolidCheckCircle } from "react-icons/bi";
 import { RiAlertFill } from "react-icons/ri";
 import { MdDoNotDisturbOn } from "react-icons/md";
 
-const StyledLayoutFigure = styled.div`
+const LayoutFigure = styled.div`
   margin-right: 0.5rem !important;
   display: inline-flex !important;
 `;
 
-const StyledFigured = styled.figure`
+const StyledFigure = styled.figure`
   display: inline-flex;
   margin: 0;
 `;
@@ -28,9 +28,9 @@ const Figure = ({ score }: Props) => {
     }
   };
   return (
-    <StyledLayoutFigure>
-      <StyledFigured>{showFigure(score)}</StyledFigured>
-    </StyledLayoutFigure>
+    <LayoutFigure>
+      <StyledFigure>{showFigure(score)}</StyledFigure>
+    </LayoutFigure>
   );
 };
 export default Figure;
