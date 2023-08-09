@@ -172,7 +172,7 @@ const InputPwd = ({
         {isPwdEvaluating ? (
           <StyledSpinner src="/images/spinner-light.svg" alt="Loading" />
         ) : (
-          !score && !value && <SecurityPwd score={score} />
+          score !== null && value !== "" && <SecurityPwd score={score} />
         )}
       </StyledLabel>
       <StyledInputWrapper>
@@ -190,7 +190,7 @@ const InputPwd = ({
           valid={isPwdValid ? 1 : 0}
         />
         <StyledSideButton
-          show={!value ? 1 : 0}
+          show={value !== "" ? 1 : 0}
           onClick={handleClick}
           onMouseDown={handleFocus}
         >

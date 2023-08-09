@@ -168,7 +168,7 @@ const InputEmail = ({
         {isEmailEvaluating ? (
           <StyledSpinner src="/images/spinner-light.svg" alt="Loading" />
         ) : (
-          !value && <ValidateEmail valid={isEmailValid} />
+          value !== "" && <ValidateEmail valid={isEmailValid} />
         )}
       </StyledLabel>
       <StyledInputWrapper>
@@ -185,7 +185,7 @@ const InputEmail = ({
           valid={isEmailValid ? 1 : 0}
         />
         <StyledSideButton
-          show={!value ? 1 : 0}
+          show={value !== "" ? 1 : 0}
           onClick={handleClick}
           onMouseDown={handleFocus}
         >

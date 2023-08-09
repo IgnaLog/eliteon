@@ -19,26 +19,51 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html, body, #root{
+  html, body, #root {
     margin: 0;
     height: 100%;
     font-family: Cerebri Regular, Helvetica, sans-serif;
     font-weight: 500;
     font-size: 10px;
-    background-color: rgb(16, 16, 16);
     color-scheme: dark;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+  }
+
+  button {
+    background: none;
+    border: none;
+    border-radius: 0;
+    color: inherit;
+    font: inherit;
+
+    &:hover{
+      cursor: pointer;
+    }
+  }
+
+  div, footer, article {
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
   }
 
   .App {
-    display: flex;
+    width: 100%;
+    height: 90vh;
+    display: flex ;
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    -webkit-box-flex: 1;
     flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
-    min-height: 100vh; 
-    padding: 1rem 0.5rem;
+    z-index: 1;
   }
+
 `;
 
 export default GlobalStyle;
