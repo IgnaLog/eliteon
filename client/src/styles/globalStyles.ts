@@ -13,6 +13,12 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 
+  @font-face {
+    font-family: "Cerebri Bold";
+    src: url(../fonts/Cerebri-Sans/CerebriSans-Bold.woff2) format('woff2'), url(../fonts/Cerebri-Sans/CerebriSans-Bold.woff) format('woff');
+    font-style: normal;
+  }
+
   *,
   *::before,
   *::after {
@@ -65,7 +71,6 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     z-index: 1;
   }
-
 `;
 
 export default GlobalStyle;
