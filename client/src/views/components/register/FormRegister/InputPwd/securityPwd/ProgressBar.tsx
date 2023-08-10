@@ -1,15 +1,12 @@
 import styled from "styled-components";
 
-const LayoutProgressBar = styled.div`
-  transition: color 0.3s ease-out;
-  width: 4.4rem;
-`;
-
 const StyledProgressBar = styled.div`
-  overflow: hidden;
+  width: 4.4rem;
   height: 0.5rem;
-  background: hsla(0, 0%, 100%, 0.16);
+  overflow: hidden;
   border-radius: 0.6rem;
+  background: hsla(0, 0%, 100%, 0.16);
+  transition: color 0.3s ease-out;
 `;
 
 const ProgressFill = styled.div<{ percentage: number }>`
@@ -27,11 +24,9 @@ type Props = {
 
 const ProgressBar = ({ percentage }: Props) => {
   return (
-    <LayoutProgressBar>
-      <StyledProgressBar>
-        <ProgressFill percentage={percentage} />
-      </StyledProgressBar>
-    </LayoutProgressBar>
+    <StyledProgressBar>
+      <ProgressFill percentage={percentage} />
+    </StyledProgressBar>
   );
 };
 export default ProgressBar;

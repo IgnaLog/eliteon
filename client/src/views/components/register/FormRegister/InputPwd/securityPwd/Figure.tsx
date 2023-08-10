@@ -3,14 +3,10 @@ import { BiSolidCheckCircle } from "react-icons/bi";
 import { RiAlertFill } from "react-icons/ri";
 import { MdDoNotDisturbOn } from "react-icons/md";
 
-const LayoutFigure = styled.div`
-  margin-right: 0.5rem;
-  display: inline-flex;
-`;
-
 const StyledFigure = styled.figure`
-  display: inline-flex;
+  display: flex;
   margin: 0;
+  padding-right: 0.5rem;
 `;
 
 type Props = {
@@ -27,10 +23,6 @@ const Figure = ({ score }: Props) => {
       return <BiSolidCheckCircle size={18} />;
     }
   };
-  return (
-    <LayoutFigure>
-      <StyledFigure>{showFigure(score)}</StyledFigure>
-    </LayoutFigure>
-  );
+  return <StyledFigure>{showFigure(score)}</StyledFigure>;
 };
 export default Figure;

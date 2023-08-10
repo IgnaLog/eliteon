@@ -14,7 +14,6 @@ const StyledSubTitle = styled.p`
   letter-spacing: -0.2px;
   text-align: left;
   color: rgb(173, 174, 181);
-  margin-bottom: 3rem;
 `;
 
 const Title = () => {

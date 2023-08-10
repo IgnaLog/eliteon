@@ -1,11 +1,7 @@
 import styled from "styled-components";
 
-const LayoutText = styled.div`
-  margin-right: 1rem;
-`;
-
 const CoreText = styled.p`
-  font: inherit;
+  padding-right: 1rem;
   margin: 0;
 `;
 
@@ -14,10 +10,6 @@ type Props = {
 };
 
 const Description = ({ description }: Props) => {
-  return (
-    <LayoutText>
-      <CoreText>{description}</CoreText>
-    </LayoutText>
-  );
+  return <CoreText>{description}</CoreText>;
 };
 export default Description;

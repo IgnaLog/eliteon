@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 const PwdIndicator = styled.div<{ color: string }>`
   display: flex;
-  -webkit-box-align: center;
   align-items: center;
   color: ${({ color }) => color};
 `;

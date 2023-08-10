@@ -23,8 +23,8 @@ const Label = styled.label`
 `;
 
 const Spinner = styled.img`
-  width: 5%;
-  height: 5%;
+  width: 4.5%;
+  height: 4.5%;
   user-select: none;
   pointer-events: none;
   animation: 864ms linear 0s infinite normal none running spin;
@@ -95,18 +95,13 @@ const Input = styled(Field)<{ valid: boolean }>`
 
 const SideButton = styled.div<{ show: any }>`
   height: 70%;
+  display: ${({ show }) => (show ? "flex" : "none")};
   padding: 1.4rem 0.8rem;
   position: absolute;
   right: 1.5%;
   top: 16%;
   align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  color: rgb(255, 255, 255);
   cursor: pointer;
-  user-select: none;
-  display: ${({ show }) => (show ? "flex" : "none")};
 
   &:hover,
   &:active {
@@ -133,9 +128,6 @@ const StyledErrorMessage = styled(ErrorMessage)<{ valid: number }>`
   font-family: Cerebri Regular, sans-serif;
   font-size: 1.4rem;
   letter-spacing: -0.01rem;
-  line-height: 1.8rem;
-  -webkit-box-pack: end;
-  justify-content: flex-end;
 `;
 
 type Props = {

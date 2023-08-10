@@ -2,9 +2,7 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 const Button = styled.button`
-  position: relative;
   padding: 1rem 1.8rem;
-  border: 0.1rem solid rgb(69, 255, 255);
   border-radius: 0.6rem;
   cursor: pointer;
   background-color: rgb(69, 255, 255);
@@ -24,9 +22,7 @@ const Button = styled.button`
 
 const ContentButton = styled.div<{ show: any }>`
   display: flex;
-  -webkit-box-pack: center;
   justify-content: center;
-  -webkit-box-align: center;
   align-items: center;
   opacity: ${({ show }) => (show ? 1 : 0)};
 `;

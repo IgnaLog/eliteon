@@ -3,24 +3,18 @@ import { Trans, useTranslation } from "react-i18next";
 
 const Container = styled.div`
   margin-top: 25px;
+
   span,
   a {
     font-family: cerebri, sans-serif;
     font-size: 1.4rem;
     letter-spacing: -0.1px;
-    color: white;
-  }
-
-  span {
     color: rgb(173, 174, 181);
+    text-decoration: none;
   }
 
-  a,
-  a:visited,
-  a:hover,
-  a:focus,
-  a:active {
-    text-decoration: none;
+  a {
+    color: white;
     cursor: pointer;
   }
 `;
