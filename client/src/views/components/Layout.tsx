@@ -3,6 +3,7 @@ import { useState } from "react";
 import Register from "./register/Register";
 import Footer from "./Footer";
 import Main from "./Main";
+import Login from "./login/Login";
 
 const Layout = ({}) => {
   const [isSignupOpen, setSignupOpen] = useState(false);
@@ -19,6 +20,7 @@ const Layout = ({}) => {
     <>
       <Navbar toggleSignup={toggleSignup} toggleLogin={toggleLogin} />
       <Register isSignupOpen={isSignupOpen} toggleSignup={toggleSignup} />
+      <Login isLoginOpen={isLoginOpen} toggleLogin={toggleLogin} />
       <Main />
       <Footer />
     </>

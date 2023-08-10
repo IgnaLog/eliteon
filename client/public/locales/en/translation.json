@@ -13,7 +13,6 @@
         "passwordPlaceholder": "Password",
         "submit": "Log in",
         "terms": "By continuing you agree to Eliteon's <a href='/terms-of-service'>Terms of Service</a>, including <a href='/additional-terms'>Additional Terms</a>, and <a href='/privacy-policy'>Privacy Policy</a>.",
-        "forgotPasswordLink": "<a href='/forgot-password'>Forgot your password?</a>",
         "noAccount": "<span>Don't have an account?</span><a href='/register'> Sign up</a>"
     },
     "register": {

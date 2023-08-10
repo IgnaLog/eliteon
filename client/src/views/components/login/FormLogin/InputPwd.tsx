@@ -1,9 +1,8 @@
-import { ChangeEvent, MouseEvent } from "react";
 import styled from "styled-components";
+import { LuEyeOff, LuEye } from "react-icons/lu";
 import { ErrorMessage, Field } from "formik";
 import { useTranslation } from "react-i18next";
-import { LuX } from "react-icons/lu";
-import ValidateEmail from "./validateEmail/ValidateEmail";
+import { ChangeEvent, MouseEvent } from "react";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,23 +19,6 @@ const Label = styled.label`
   font-size: 14px;
   letter-spacing: -0.1px;
   color: rgba(242, 241, 243, 1);
-`;
-
-const Spinner = styled.img`
-  width: 4.5%;
-  height: 4.5%;
-  user-select: none;
-  pointer-events: none;
-  animation: 864ms linear 0s infinite normal none running spin;
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
 `;
 
 const InputWrapper = styled.div`
@@ -114,82 +96,62 @@ const SideButton = styled.div<{ show: any }>`
   }
 `;
 
-const StyledErrorMessage = styled(ErrorMessage)<{ valid: number }>`
+const StyledErrorMessage = styled(ErrorMessage)`
   margin: 0.25rem 0px 0px;
   padding: 0.2rem 0px;
   text-align: right;
-  color: ${({ valid }) => {
-    if (valid) {
-      return "rgb(127, 119, 131)";
-    } else {
-      return "rgb(250, 130, 106)";
-    }
-  }};
+  color: rgb(250, 130, 106);
   font-family: Cerebri Regular, sans-serif;
   font-size: 1.4rem;
   letter-spacing: -0.01rem;
+  line-height: 1.8rem;
 `;
 
 type Props = {
   value: string;
-  isEmailValid: boolean;
-  isEmailEvaluating: boolean;
+  error: number;
+  showPassword: boolean;
   inputRef: React.RefObject<HTMLInputElement>;
   handleChange: (e: ChangeEvent<any>) => void;
-  handleBlur: (e: MouseEvent<HTMLInputElement>) => void;
   handleFocus: (e: MouseEvent<HTMLInputElement>) => void;
   handleClick: (e: MouseEvent<HTMLDivElement>) => void;
 };
 
-const InputEmail = ({
+const InputPwd = ({
   value,
-  isEmailValid,
-  isEmailEvaluating,
+  error,
+  showPassword,
   inputRef,
   handleChange,
-  handleBlur,
   handleFocus,
   handleClick,
 }: Props) => {
   const { t } = useTranslation();
-
   return (
     <Wrapper>
-      <Label>
-        {t("register.email")}
-        {isEmailEvaluating ? (
-          <Spinner src="/images/spinner-light.svg" alt="Loading" />
-        ) : (
-          value !== "" && <ValidateEmail valid={isEmailValid} />
-        )}
-      </Label>
+      <Label>{t("login.password")}</Label>
       <InputWrapper>
         <Input
-          type="text"
-          id="email"
-          name="email"
+          type="password"
+          id="password"
+          name="password"
           value={value}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          placeholder={t("register.emailPlaceholder")}
           innerRef={inputRef}
-          valid={isEmailValid ? 1 : 0}
+          onChange={handleChange}
+          placeholder={t("login.passwordPlaceholder")}
+          valid={!error}
         />
         <SideButton
           show={value !== "" ? 1 : 0}
           onClick={handleClick}
           onMouseDown={handleFocus}
         >
-          <LuX size={18} />
+          {showPassword ? <LuEyeOff size={18} /> : <LuEye size={18} />}
         </SideButton>
       </InputWrapper>
-      <StyledErrorMessage
-        valid={isEmailValid ? 1 : 0}
-        name="email"
-        component="p"
-      />
+      <StyledErrorMessage name="password" component="p" />
     </Wrapper>
   );
 };
-export default InputEmail;
+
+export default InputPwd;

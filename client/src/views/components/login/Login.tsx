@@ -1,27 +1,28 @@
 import { useState } from "react";
 import styled from "styled-components";
 import ServerInfo from "./ServerInfo";
-import AlreadyRegistered from "./AlreadyRegistered";
 import Title from "./Title";
-import FormRegister from "./FormRegister/FormRegister";
-import CloseButton from "./CloseButton";
 import ModalBox from "../ModalBox";
+import FormLogin from "./FormLogin/FormLogin";
+import HaveAnAccount from "./HaveAnAccount";
+import CloseButton from "./CloseButton";
 
-const Content = styled.div`
+const Content = styled.section`
   width: 50rem;
   display: flex;
   flex-direction: column;
   position: relative;
+  text-align: center;
   padding: 3rem;
   border-radius: 0.4rem;
-  text-align: center;
+  overflow: hidden;
   background-color: rgb(30, 27, 30);
   pointer-events: auto !important;
 
   span,
   a {
     font-family: cerebri, sans-serif;
-    font-size: 1rem;
+    font-size: 1.4rem;
     letter-spacing: -0.1px;
     color: white;
   }
@@ -41,24 +42,24 @@ const Content = styled.div`
 `;
 
 type Props = {
-  isSignupOpen: boolean;
-  toggleSignup: () => void;
+  isLoginOpen: boolean;
+  toggleLogin: () => void;
 };
 
-const Register = ({ isSignupOpen, toggleSignup }: Props) => {
+const Login = ({ isLoginOpen, toggleLogin }: Props) => {
   const [serverMsg, setServerMsg] = useState("");
 
   return (
-    <ModalBox isModalOpen={isSignupOpen} toggleModal={toggleSignup}>
+    <ModalBox isModalOpen={isLoginOpen} toggleModal={toggleLogin}>
       <Content>
-        <CloseButton onClose={toggleSignup} />
+        <CloseButton onClose={toggleLogin} />
         <Title />
-        <FormRegister setServerMsg={setServerMsg} />
+        <FormLogin setServerMsg={setServerMsg} />
         <ServerInfo serverMsg={serverMsg} />
-        <AlreadyRegistered />
+        <HaveAnAccount />
       </Content>
     </ModalBox>
   );
 };
 
-export default Register;
+export default Login;
