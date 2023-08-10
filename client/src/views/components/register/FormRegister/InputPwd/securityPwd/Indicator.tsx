@@ -4,9 +4,9 @@ import ProgressBar from "./ProgressBar";
 import styled from "styled-components";
 
 const PwdIndicator = styled.div<{ color: string }>`
-  display: flex !important;
-  -webkit-box-align: center !important;
-  align-items: center !important;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
   color: ${({ color }) => color};
 `;
 

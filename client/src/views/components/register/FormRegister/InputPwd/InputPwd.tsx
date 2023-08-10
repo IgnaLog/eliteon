@@ -83,7 +83,7 @@ const Input = styled(Field)<{ valid: boolean }>`
         return "rgb(250, 130, 106)";
       }
     }};
-    border-width: 2px !important;
+    border-width: 2px;
     outline: none;
   }
 

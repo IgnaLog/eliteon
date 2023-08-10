@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const LayoutText = styled.div`
-  margin-right: 1rem !important;
+  margin-right: 1rem;
 `;
 
 const CoreText = styled.p`

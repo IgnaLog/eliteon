@@ -3,12 +3,12 @@ import { BiSolidCheckCircle } from "react-icons/bi";
 import { MdDoNotDisturbOn } from "react-icons/md";
 import { useEffect, useState } from "react";
 
-const StyledLayoutFigure = styled.div<{ color: string }>`
+const LayoutFigure = styled.div<{ color: string }>`
   color: ${({ color }) => color};
-  display: inline-flex !important;
+  display: inline-flex;
 `;
 
-const StyledFigured = styled.figure`
+const Figure = styled.figure`
   display: inline-flex;
   margin: 0;
 `;
@@ -25,15 +25,15 @@ const ValidateEmail = ({ valid }: Props) => {
   }, [valid]);
 
   return (
-    <StyledLayoutFigure color={valid ? "#00f593;" : "#eb0400"}>
-      <StyledFigured>
+    <LayoutFigure color={valid ? "#00f593;" : "#eb0400"}>
+      <Figure>
         {isValid ? (
           <BiSolidCheckCircle size={18} />
         ) : (
           <MdDoNotDisturbOn size={18} />
         )}
-      </StyledFigured>
-    </StyledLayoutFigure>
+      </Figure>
+    </LayoutFigure>
   );
 };
 export default ValidateEmail;

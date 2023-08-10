@@ -4,8 +4,8 @@ import { RiAlertFill } from "react-icons/ri";
 import { MdDoNotDisturbOn } from "react-icons/md";
 
 const LayoutFigure = styled.div`
-  margin-right: 0.5rem !important;
-  display: inline-flex !important;
+  margin-right: 0.5rem;
+  display: inline-flex;
 `;
 
 const StyledFigure = styled.figure`
