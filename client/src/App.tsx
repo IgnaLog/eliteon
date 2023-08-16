@@ -1,17 +1,15 @@
-import Register from "./views/pages/Register";
-import Login from "./views/pages/Login";
 import Home from "./views/pages/Home";
 import Layout from "./views/components/Layout";
 import Editor from "./views/pages/Editor";
 import Admin from "./views/pages/Admin";
 import Missing from "./views/pages/Missing";
-import Unauthorized from "./views/pages/Unauthorized";
 import Lounge from "./views/pages/Lounge";
-import LinkPage from "./views/pages/LinkPage";
 import RequireAuth from "./views/components/RequireAuth";
 import PersistLogin from "./views/components/PersistLogin";
 import { Routes, Route } from "react-router-dom";
 import Landing from "./views/pages/Landing";
+import { useThemeStore } from "./store/themeStore";
+import { useEffect } from "react";
 
 const ROLES = {
   USER: 2001,
@@ -20,17 +18,17 @@ const ROLES = {
 };
 
 function App() {
+  const { theme } = useThemeStore();
+
+  useEffect(() => {
+    document.documentElement.className = `tw-root--theme-${theme}`;
+  }, [theme]);
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        {/* public routes */}
         <Route path="landing" element={<Landing />} />
-        {/* <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="linkpage" element={<LinkPage />} />
-        <Route path="unauthorized" element={<Unauthorized />} /> */}
 
-        {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.USER]} />}>
             <Route path="/" element={<Home />} />
@@ -51,7 +49,6 @@ function App() {
           </Route>
         </Route>
 
-        {/* catch all */}
         <Route path="*" element={<Missing />} />
       </Route>
     </Routes>

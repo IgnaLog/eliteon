@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import GlobalStyles from "./styles/globalStyles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import "./config/i18n";
+import GlobalStyles from "./styles/globalStyles";
 
 if (import.meta.env.PROD) {
   disableReactDevTools();

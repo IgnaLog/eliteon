@@ -1,0 +1,91 @@
+import { css } from "styled-components";
+
+const variables = css`
+  :root {
+    --color-hinted-grey-1: #0e0e10;
+    --color-hinted-grey-2: #18181b;
+    --color-hinted-grey-3: #1f1f23;
+    --color-hinted-grey-4: #26262c;
+    --color-hinted-grey-5: #323239;
+    --color-hinted-grey-6: #3b3b44;
+    --color-hinted-grey-7: #53535f;
+    --color-hinted-grey-8: #848494;
+    --color-hinted-grey-9: #adadb8;
+    --color-hinted-grey-10: #c8c8d0;
+    --color-hinted-grey-11: #d3d3d9;
+    --color-hinted-grey-12: #dedee3;
+    --color-hinted-grey-13: #e6e6ea;
+    --color-hinted-grey-14: #efeff1;
+    --color-hinted-grey-15: #f7f7f8;
+    --color-opac-b-1: rgba(0, 0, 0, 0.05);
+    --color-opac-b-2: rgba(0, 0, 0, 0.08);
+    --color-opac-b-3: rgba(0, 0, 0, 0.13);
+    --color-opac-b-4: rgba(0, 0, 0, 0.16);
+    --color-opac-b-5: rgba(0, 0, 0, 0.22);
+    --color-opac-b-6: rgba(0, 0, 0, 0.28);
+    --color-opac-b-7: rgba(0, 0, 0, 0.4);
+    --color-opac-b-8: rgba(0, 0, 0, 0.5);
+    --color-opac-b-9: rgba(0, 0, 0, 0.6);
+    --color-opac-b-10: rgba(0, 0, 0, 0.7);
+    --color-opac-b-11: rgba(0, 0, 0, 0.75);
+    --color-opac-b-12: rgba(0, 0, 0, 0.8);
+    --color-opac-b-13: rgba(0, 0, 0, 0.85);
+    --color-opac-b-14: rgba(0, 0, 0, 0.9);
+    --color-opac-b-15: rgba(0, 0, 0, 0.95);
+    --color-opac-gd-1: rgba(83, 83, 95, 0.38);
+    --color-opac-gd-2: rgba(83, 83, 95, 0.48);
+    --color-opac-gd-3: rgba(83, 83, 95, 0.55);
+    --color-opac-gd-4: rgba(50, 50, 57, 0.62);
+    --color-opac-gd-5: rgba(50, 50, 57, 0.95);
+    --color-opac-gl-1: hsla(240, 7%, 70%, 0.22);
+    --color-opac-gl-2: hsla(240, 7%, 70%, 0.35);
+    --color-opac-gl-3: hsla(240, 7%, 70%, 0.43);
+    --color-opac-gl-4: hsla(240, 8%, 88%, 0.4);
+    --color-opac-gl-5: hsla(240, 8%, 88%, 0.95);
+    --color-white: #fff;
+    --color-black: #000;
+    --color-transparent: transparent;
+    --color-background-button-brand: #9147ff;
+    --color-background-button-brand-hover: #772ce8;
+    --color-border-brand: #a970ff;
+  }
+
+  .tw-root--theme-dark,
+  :root {
+    --color-background-body: var(--color-hinted-grey-1);
+    --color-background-base: var(--color-hinted-grey-2);
+
+    --color-text-base: var(--color-hinted-grey-14);
+
+    --shadow-elevation-1: 0 1px 2px var(--color-opac-b-14),
+      0 0px 2px var(--color-opac-b-14);
+
+    --color-background-button-primary-default: var(
+      --color-background-button-brand
+    );
+    --color-background-button-secondary-default: var(--color-opac-gd-1);
+
+    --color-background-button-primary-hover: var(
+      --color-background-button-brand-hover
+    );
+    --color-background-button-secondary-hover: var(--color-opac-gd-2);
+
+    --color-text-button-primary: var(--color-white);
+    --color-text-button-secondary: var(--color-hinted-grey-14);
+
+    --color-border-toggle: var(--color-opac-gl-5);
+    --color-border-toggle-checked: var(--color-border-brand);
+    --color-background-toggle: var(--color-transparent);
+    --color-background-toggle-checked: var(--color-black);
+    --color-background-toggle-handle: var(--color-white);
+    --color-background-toggle-handle-checked: var(--color-border-brand);
+    --color-text-toggle-checked-icon: var(--color-border-brand);
+  }
+
+  .tw-root--theme-light {
+    --color-background-body: var(--color-hinted-grey-15);
+    --color-background-base: var(--color-white);
+  }
+`;
+
+export default variables;

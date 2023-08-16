@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import ToggleSwitch from "./ToggleSwitch";
 
 const Nav = styled.nav`
   height: 5rem;
-  background-color: #18181b;
+  background-color: var(--color-background-base);
   display: flex;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.897), 0 0px 2px rgba(0, 0, 0, 0.897);
+  box-shadow: var(--shadow-elevation-1);
 `;
 
 const ContentLeft = styled.div`
@@ -46,12 +47,24 @@ const Button = styled.button<{ login: boolean }>`
   cursor: pointer;
   text-decoration: none;
   padding: 0px 1.1rem;
+  color: ${({ login }) =>
+    login
+      ? " var(--color-text-button-secondary)"
+      : " var(--color-text-button-primary)"};
   background-color: ${({ login }) =>
-    login ? "rgba(83, 83, 95, 0.38)" : "#9147ff"};
+    login
+      ? "var(--color-background-button-secondary-default)"
+      : "var(--color-background-button-primary-default)"};
 
   &:hover {
     background-color: ${({ login }) =>
-      login ? "rgba(83, 83, 95, 0.48)" : "#772ce8"};
+      login
+        ? "var(--color-background-button-secondary-hover)"
+        : "var(--color-background-button-primary-hover)"};
+    color: ${({ login }) =>
+      login
+        ? "var(--color-text-button-secondary)"
+        : "var(--color-text-button-primary)"};
   }
 `;
 
@@ -63,7 +76,9 @@ type Props = {
 const Navbar = ({ toggleSignup, toggleLogin }: Props) => {
   return (
     <Nav>
-      <ContentLeft />
+      <ContentLeft>
+        <ToggleSwitch />
+      </ContentLeft>
       <ContentRight>
         <SessionButtons>
           <Button onClick={toggleLogin} login={true}>

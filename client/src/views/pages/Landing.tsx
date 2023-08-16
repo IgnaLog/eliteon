@@ -3,6 +3,7 @@ import styled from "styled-components";
 const StyledLanding = styled.div`
   height: 100% !important;
   font-size: 200px;
+  color: inherit;
 `;
 const Landing = () => {
   return (
