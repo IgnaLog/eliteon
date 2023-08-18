@@ -3,7 +3,7 @@ import ToggleSwitch from "./ToggleSwitch";
 
 const Nav = styled.nav`
   height: 5rem;
-  background-color: var(--color-background-base);
+  background-color: var(--bg-navy);
   display: flex;
   box-shadow: var(--shadow-elevation-1);
 `;
@@ -41,30 +41,25 @@ const Button = styled.button<{ login: boolean }>`
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   border-radius: 0.4rem;
-  font-family: Cerebri Bold, Helvetica, sans-serif;
+  font-family:
+    Cerebri Bold,
+    Helvetica,
+    sans-serif;
   font-size: 1.4rem;
   user-select: none;
   cursor: pointer;
   text-decoration: none;
   padding: 0px 1.1rem;
   color: ${({ login }) =>
-    login
-      ? " var(--color-text-button-secondary)"
-      : " var(--color-text-button-primary)"};
+    login ? "var(--txt-btn-secondary)" : "var(--txt-btn-primary)"};
   background-color: ${({ login }) =>
-    login
-      ? "var(--color-background-button-secondary-default)"
-      : "var(--color-background-button-primary-default)"};
+    login ? "var(--bg-btn-secondary)" : "var(--bg-btn-primary)"};
 
   &:hover {
     background-color: ${({ login }) =>
-      login
-        ? "var(--color-background-button-secondary-hover)"
-        : "var(--color-background-button-primary-hover)"};
+      login ? "var(--bg-btn-secondary-hover)" : "var(--bg-btn-primary-hover)"};
     color: ${({ login }) =>
-      login
-        ? "var(--color-text-button-secondary)"
-        : "var(--color-text-button-primary)"};
+      login ? "var(--txt-btn-secondary)" : "var(--txt-btn-primary)"};
   }
 `;
 

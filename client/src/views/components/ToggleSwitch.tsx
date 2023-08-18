@@ -30,19 +30,15 @@ const ToggleButton = styled.div<ToggleButtonProps>`
   transition-timing-function: ease;
   transition-duration: 100ms;
   border-color: ${(props) =>
-    props.checked
-      ? "var(--color-border-toggle-checked)"
-      : "var(--color-border-toggle)"};
+    props.checked ? "var(--border-toggle-checked)" : "var(--border-toggle)"};
   background-color: ${(props) =>
-    props.checked
-      ? "var(--color-background-toggle-checked)"
-      : "var(--color-background-toggle)"};
+    props.checked ? "var(--bg-toggle-checked)" : "var(--bg-toggle)"};
 
   &::before {
     content: "";
     border-width: 0px 0px 2px 2px;
     border-style: solid;
-    border-color: var(--color-text-toggle-checked-icon);
+    border-color: var(--txt-toggle-checked-icon);
     display: ${(props) => (props.checked ? "block" : "none")};
     position: absolute;
     top: 0.7rem;
@@ -68,8 +64,8 @@ const ToggleButton = styled.div<ToggleButtonProps>`
     border-radius: 50%;
     background-color: ${(props) =>
       props.checked
-        ? "var(--color-background-toggle-handle-checked)"
-        : "var(--color-background-toggle-handle)"};
+        ? "var(--bg-toggle-handle-checked)"
+        : "var(--bg-toggle-handle)"};
   }
 `;
 

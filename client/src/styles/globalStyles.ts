@@ -1,10 +1,9 @@
 import { createGlobalStyle } from "styled-components";
 import fonts from "./fonts";
-import variables from "./variables";
+import "./variables.css";
 
 const GlobalStyle = createGlobalStyle`
   ${fonts}
-  ${variables}
 
   * {
     box-sizing: border-box;
@@ -21,8 +20,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: Cerebri Regular, Helvetica, sans-serif;
     font-weight: 500;
     font-size: 10px;
-    color: var(--color-text-base);
-    background-color: var(--color-background-body);
+    color: var(--txt-body);
+    background-color: var(--bg-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
