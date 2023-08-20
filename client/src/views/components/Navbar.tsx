@@ -3,8 +3,8 @@ import ToggleSwitch from "./ToggleSwitch";
 
 const Nav = styled.nav`
   height: 5rem;
-  background-color: var(--bg-navy);
   display: flex;
+  background-color: var(--bg-navy);
   box-shadow: var(--shadow-elevation-1);
 `;
 

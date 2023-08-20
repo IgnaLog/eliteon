@@ -47,8 +47,28 @@
   --color-border-brand: #a970ff;
 }
 
-.tw-root--theme-dark,
-:root {
+.tw-root--theme-light {
+  --bg-body: var(--color-hinted-grey-15);
+  --bg-navy: var(--color-white);
+  --bg-btn-primary: var(--color-bg-brand);
+  --bg-btn-secondary: var(--color-opac-gl-1);
+  --bg-btn-primary-hover: var(--color-bg-brand-hover);
+  --bg-btn-secondary-hover: var(--color-opac-gl-2);
+  --bg-toggle: var(--color-transparent);
+  --bg-toggle-checked: var(--color-transparent);
+  --bg-toggle-handle: var(--color-black);
+  --bg-toggle-handle-checked: var(--color-bg-brand-hover);
+  --txt-body: var(--color-hinted-grey-1);
+  --txt-btn-primary: var(--color-white);
+  --txt-btn-secondary: var(--color-hinted-grey-1);
+  --txt-toggle-checked-icon: var(--color-bg-brand-hover);
+  --border-toggle: var(--color-opac-gd-5);
+  --border-toggle-checked: var(--color-bg-brand-hover);
+  --shadow-elevation-1: 0 1px 2px var(--color-opac-b-3),
+    0 0px 2px var(--color-opac-b-2);
+}
+
+.tw-root--theme-dark {
   --bg-body: var(--color-hinted-grey-1);
   --bg-navy: var(--color-hinted-grey-2);
   --bg-btn-primary: var(--color-bg-brand);
@@ -69,23 +89,6 @@
     0 0px 2px var(--color-opac-b-14);
 }
 
-.tw-root--theme-light {
-  --bg-body: var(--color-hinted-grey-15);
-  --bg-navy: var(--color-white);
-  --bg-btn-primary: var(--color-bg-brand);
-  --bg-btn-secondary: var(--color-opac-gd-1);
-  --bg-btn-primary-hover: var(--color-bg-brand-hover);
-  --bg-btn-secondary-hover: var(--color-opac-gd-2);
-  --bg-toggle: var(--color-transparent);
-  --bg-toggle-checked: var(--color-black);
-  --bg-toggle-handle: var(--color-white);
-  --bg-toggle-handle-checked: var(--color-border-brand);
-  --txt-body: var(--color-hinted-grey-14);
-  --txt-btn-primary: var(--color-white);
-  --txt-btn-secondary: var(--color-hinted-grey-14);
-  --txt-toggle-checked-icon: var(--color-border-brand);
-  --border-toggle: var(--color-opac-gl-5);
-  --border-toggle-checked: var(--color-border-brand);
-  --shadow-elevation-1: 0 1px 2px var(--color-opac-b-14),
-    0 0px 2px var(--color-opac-b-14);
-}
+
+
+

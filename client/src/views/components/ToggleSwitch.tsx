@@ -1,6 +1,6 @@
-import { useState } from "react";
 import styled from "styled-components";
 import { useThemeStore } from "../../store/themeStore";
+import { useEffect, useState } from "react";
 
 interface ToggleButtonProps {
   checked: boolean;
@@ -70,13 +70,33 @@ const ToggleButton = styled.div<ToggleButtonProps>`
 `;
 
 const ToggleSwitch = () => {
-  const [isChecked, setIsChecked] = useState(false);
-  const { toggleTheme } = useThemeStore();
+  const { theme, toggleTheme } = useThemeStore();
+  const [isChecked, setIsChecked] = useState(theme === "dark");
+  const [isChangingTheme, setIsChangingTheme] = useState(false);
 
   const handleToggle = () => {
-    setIsChecked(!isChecked);
-    toggleTheme();
+    if (!isChangingTheme) {
+      setIsChecked(!isChecked);
+      setIsChangingTheme(true);
+    }
   };
+
+  const handleAnimation = () => {
+    setIsChangingTheme(false);
+  };
+
+  useEffect(() => {
+    if (isChangingTheme) {
+      const timeout = setTimeout(() => {
+        toggleTheme();
+        setIsChangingTheme(false);
+      }, 300);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [isChangingTheme]);
 
   return (
     <ToggleWrapper>
@@ -86,7 +106,7 @@ const ToggleSwitch = () => {
         checked={isChecked}
         onChange={handleToggle}
       />
-      <ToggleButton checked={isChecked} />
+      <ToggleButton checked={isChecked} onAnimationEnd={handleAnimation} />
     </ToggleWrapper>
   );
 };
