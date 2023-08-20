@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledLanding = styled.div`
-  height: 100% !important;
+  height: 100%;
   font-size: 200px;
   color: inherit;
 `;

@@ -14,64 +14,67 @@ const Label = styled.label`
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
-  font-family: cerebri, sans-serif;
+  font-family:
+    Cerebri Bold,
+    sans-serif;
   line-height: 20px;
   font-size: 14px;
   letter-spacing: -0.1px;
-  color: rgba(242, 241, 243, 1);
+  color: var(--txt-label);
 `;
 
 const InputWrapper = styled.div`
   position: relative;
-  transition: max-height 0.4s ease-out 0s, opacity 0.8s ease 0s;
+  transition:
+    max-height 0.4s ease-out 0s,
+    opacity 0.8s ease 0s;
 `;
 
 const Input = styled(Field)<{ valid: boolean }>`
   width: 100%;
   padding: 1.4rem 4.2rem 1.4rem 1.6rem;
-  border: 1px solid;
-  border-color: ${({ valid }) => {
-    if (valid) {
-      return "rgb(63, 59, 69)";
-    } else {
-      return "rgb(250, 130, 106)";
-    }
-  }};
+  border-style: solid;
+  border-width: 0px;
+  border-color: transparent;
+  box-shadow: ${({ valid }) =>
+    valid
+      ? "inset 0 0 0 1px var(--border-input)"
+      : "inset 0 0 0 2px var(--border-error)"};
   line-height: 2rem;
-  color: rgb(242, 241, 243);
-  background: rgb(32, 30, 35);
+  color: var(--txt-input);
+  background-color: var(--bg-input);
   border-radius: 8px;
   letter-spacing: -0.01rem;
-  font-family: cerebri, "sans-serif";
+  font-family:
+    Cerebri Bold,
+    "sans-serif";
   font-size: 1.6rem;
   transition: all 0.2s ease-in-out 0s;
 
   &:hover {
-    border-color: ${({ valid }) => {
-      if (valid) {
-        return "rgb(129, 122, 138)";
-      } else {
-        return "rgb(250, 130, 106)";
-      }
-    }};
+    outline: none;
+    border-color: var(--border-input-hover);
+    box-shadow: ${({ valid }) =>
+      valid
+        ? "inset 0 0 0 2px var(--border-input-hover)"
+        : "inset 0 0 0 2px var(--border-error-hover)"};
     transition: none 0s ease 0s;
   }
 
   &:focus {
-    border-color: ${({ valid }) => {
-      if (valid) {
-        return "rgb(129, 122, 138)";
-      } else {
-        return "rgb(250, 130, 106)";
-      }
-    }};
-    border-width: 2px;
+    border-color: var(--border-input-focus);
+    box-shadow: ${({ valid }) =>
+      valid
+        ? "0 0 0 2px var(--border-input-focus),inset 0 0 0 2px var(--border-input-focus)"
+        : "0 0 0 2px var(--border-error),inset 0 0 0 2px var(--border-error)"};
     outline: none;
   }
 
   &::placeholder {
-    color: rgb(127, 119, 131);
-    font-family: Cerebri Regular, "sans-serif";
+    color: var(--txt-placeholder);
+    font-family:
+      Cerebri Regular,
+      "sans-serif";
   }
 `;
 
@@ -87,12 +90,12 @@ const SideButton = styled.div<{ show: any }>`
 
   &:hover,
   &:active {
-    background: #46464636;
+    background: var(--bg-btn-txt-hover);
     border-radius: 8px;
   }
 
   &:active {
-    background: #4646461a;
+    background: var(--bg-btn-txt-active);
   }
 `;
 
@@ -100,8 +103,10 @@ const StyledErrorMessage = styled(ErrorMessage)`
   margin: 0.25rem 0px 0px;
   padding: 0.2rem 0px;
   text-align: right;
-  color: rgb(250, 130, 106);
-  font-family: Cerebri Regular, sans-serif;
+  color: var(--txt-error);
+  font-family:
+    Cerebri Regular,
+    sans-serif;
   font-size: 1.4rem;
   letter-spacing: -0.01rem;
 `;

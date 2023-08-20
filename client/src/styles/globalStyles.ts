@@ -25,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
+    color-scheme: var(--color-theme);
   }
 
   button {

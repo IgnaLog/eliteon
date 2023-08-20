@@ -14,10 +14,16 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 0.4rem;
+  background-color: var(--bg-btn-txt);
+  color: var(--fill-btn-icon);
 
   &:hover {
-    background-color: rgba(83, 83, 95, 0.48);
-    color: #efeff1;
+    background-color: var(--bg-btn-txt-hover);
+    color: var(--fill-btn-icon-hover);
+  }
+
+  &:active {
+    background: var(--bg-btn-txt-active);
   }
 `;
 
@@ -31,6 +37,7 @@ const FigureIcon = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+  fill: var(--color-fill-current);
 `;
 
 type Props = {
