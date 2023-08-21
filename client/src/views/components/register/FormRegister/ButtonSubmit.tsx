@@ -1,7 +1,9 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useTranslation } from "react-i18next";
+import { CgSpinner } from "react-icons/cg";
 
 const Button = styled.button`
+  position: relative;
   padding: 1rem 1.8rem;
   border-radius: 0.6rem;
   cursor: pointer;
@@ -22,7 +24,6 @@ const Button = styled.button`
 
   &:disabled {
     background-color: var(--bg-btn-disabled);
-    color: var(--txt-btn-disabled);
     cursor: not-allowed;
   }
 `;
@@ -34,7 +35,16 @@ const ContentButton = styled.div<{ show: any }>`
   opacity: ${({ show }) => (show ? 1 : 0)};
 `;
 
-const LoadingSpinner = styled.img`
+const spinAnimation = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
+const Spinner = styled(CgSpinner)`
   width: 100%;
   height: 100%;
   display: block;
@@ -45,16 +55,8 @@ const LoadingSpinner = styled.img`
   inset: 0px;
   box-sizing: border-box;
   pointer-events: none;
-  animation: 864ms linear 0s infinite normal none running spin;
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
+  animation: ${spinAnimation} 864ms linear 0s infinite normal none running;
+  color: var(--txt-spinner);
 `;
 
 type Props = {
@@ -90,9 +92,7 @@ const ButtonSubmit = ({
   };
   return (
     <Button type="submit" disabled={disableSubmitButton()}>
-      {isSubmitting && (
-        <LoadingSpinner src="/images/spinner-light.svg" alt="Loading" />
-      )}
+      {isSubmitting && <Spinner />}
       <ContentButton show={!isSubmitting ? 1 : 0}>
         {t("register.submit")}
       </ContentButton>

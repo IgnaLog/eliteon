@@ -98,51 +98,6 @@
   --color-opac-gl-6: hsla(0, 0%, 100%, 0.16);
 }
 
-.tw-root--theme-dark {
-  --color-theme: dark;
-  --bg-body: var(--color-hinted-grey-1);
-  --bg-navy: var(--color-hinted-grey-2);
-  --bg-modal: var(--color-grey-5);
-  --bg-btn-primary: var(--color-eliteon-9);
-  --bg-btn-secondary: var(--color-opac-gd-1);
-  --bg-btn-primary-hover: var(--color-eliteon-8);
-  --bg-btn-secondary-hover: var(--color-opac-gd-2);
-  --bg-btn-disabled: var(--color-opac-gd-1);
-  --bg-btn-txt:var(--color-transparent);
-  --bg-btn-txt-hover: var(--color-opac-gd-6);
-  --bg-btn-txt-active: var(--color-opac-gd-7);
-  --bg-toggle: var(--color-transparent);
-  --bg-toggle-checked: var(--color-black);
-  --bg-toggle-handle: var(--color-white);
-  --bg-toggle-handle-checked: var(--color-eliteon-10);
-  --bg-input: var(--color-grey-4);
-  --txt-body: var(--color-hinted-grey-14);
-  --txt-btn-primary: var(--color-white);
-  --txt-btn-secondary: var(--color-hinted-grey-14);
-  --txt-btn-disabled: var(--color-hinted-grey-9);
-  --txt-toggle-checked-icon: var(--color-eliteon-10);
-  --txt-label: var(--color-white-2);
-  --txt-input: var(--color-white-2);
-  --txt-placeholder: var(--color-grey-1);
-  --txt-link: var(--color-eliteon-11);
-  --txt-span: var(--color-hinted-grey-9);
-  --txt-error: var(--color-red-11);
-  --border-toggle: var(--color-opac-gl-5);
-  --border-toggle-checked: var(--color-eliteon-10);
-  --border-error: var(--color-red-11);
-  --border-input: var(--color-grey-2);
-  --border-input-hover: var(--color-grey-1);
-  --border-error-hover: var(--color-red-11);
-  --border-input-focus: var(--color-eliteon-10);
-  --fill-btn-icon: var(--color-hinted-grey-14);
-  --fill-btn-icon-hover: var(--color-hinted-grey-14);
-  --shadow-elevation-1: 0 1px 2px var(--color-opac-b-14),
-  0 0px 2px var(--color-opac-b-14);
-  --bg-progress: var(--color-opac-gl-6);
-  --fill-success: var(--color-green-13);
-  --txt-spinner: var(--color-white-2);
-}
-
 .tw-root--theme-light {
   --color-theme: light;
   --bg-body: var(--color-white); 
@@ -186,6 +141,51 @@
   --bg-progress: var(--color-hinted-grey-10);
   --fill-success: var(--color-green-9);
   --txt-spinner: var(--color-black);
+}
+
+.tw-root--theme-dark {
+  --color-theme: dark;
+  --bg-body: var(--color-hinted-grey-1);
+  --bg-navy: var(--color-hinted-grey-2);
+  --bg-modal: var(--color-grey-5);
+  --bg-btn-primary: var(--color-eliteon-9);
+  --bg-btn-secondary: var(--color-opac-gd-1);
+  --bg-btn-primary-hover: var(--color-eliteon-8);
+  --bg-btn-secondary-hover: var(--color-opac-gd-2);
+  --bg-btn-disabled: var(--color-opac-gd-1);
+  --bg-btn-txt:var(--color-transparent);
+  --bg-btn-txt-hover: var(--color-opac-gd-6);
+  --bg-btn-txt-active: var(--color-opac-gd-7);
+  --bg-toggle: var(--color-transparent);
+  --bg-toggle-checked: var(--color-black);
+  --bg-toggle-handle: var(--color-white);
+  --bg-toggle-handle-checked: var(--color-eliteon-10);
+  --bg-input: var(--color-grey-4);
+  --txt-body: var(--color-hinted-grey-14);
+  --txt-btn-primary: var(--color-white);
+  --txt-btn-secondary: var(--color-hinted-grey-14);
+  --txt-btn-disabled: var(--color-hinted-grey-9);
+  --txt-toggle-checked-icon: var(--color-eliteon-10);
+  --txt-label: var(--color-white-2);
+  --txt-input: var(--color-white-2);
+  --txt-placeholder: var(--color-grey-1);
+  --txt-link: var(--color-eliteon-11);
+  --txt-span: var(--color-hinted-grey-9);
+  --txt-error: var(--color-red-11);
+  --border-toggle: var(--color-opac-gl-5);
+  --border-toggle-checked: var(--color-eliteon-10);
+  --border-error: var(--color-red-11);
+  --border-input: var(--color-grey-2);
+  --border-input-hover: var(--color-grey-1);
+  --border-error-hover: var(--color-red-11);
+  --border-input-focus: var(--color-eliteon-10);
+  --fill-btn-icon: var(--color-hinted-grey-14);
+  --fill-btn-icon-hover: var(--color-hinted-grey-14);
+  --shadow-elevation-1: 0 1px 2px var(--color-opac-b-14),
+  0 0px 2px var(--color-opac-b-14);
+  --bg-progress: var(--color-opac-gl-6);
+  --fill-success: var(--color-green-13);
+  --txt-spinner: var(--color-white-2);
 }
 
 
