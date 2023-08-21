@@ -21,7 +21,6 @@ import { registerRequest } from "../../../../api/authService";
 const StyledForm = styled(Form)`
   display: flex;
   flex-direction: column;
-  margin: 15px 0px 10px;
 `;
 
 type Props = {
@@ -45,8 +44,8 @@ const FormRegister = ({ setServerMsg }: Props) => {
   const [isPwdValid, setIsPwdValid] = useState(true);
   const inputEmailRef = useRef<HTMLInputElement>(null);
   const inputPwdRef = useRef<HTMLInputElement>(null);
-  const timeoutEmailRef = useRef<number | undefined>(undefined);
-  const timeoutPwdRef = useRef<number | undefined>(undefined);
+  const timeoutEmailRef = useRef<ReturnType<typeof setTimeout>>();
+  const timeoutPwdRef = useRef<ReturnType<typeof setTimeout>>();
 
   const signUpSchema = Yup.object().shape({
     email: Yup.string()

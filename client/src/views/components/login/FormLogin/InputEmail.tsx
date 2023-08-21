@@ -14,9 +14,7 @@ const Label = styled.label`
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
-  font-family:
-    Cerebri Bold,
-    sans-serif;
+  font-family: Cerebri, sans-serif;
   line-height: 20px;
   font-size: 14px;
   letter-spacing: -0.1px;
@@ -33,40 +31,44 @@ const InputWrapper = styled.div`
 const Input = styled(Field)<{ valid: boolean }>`
   width: 100%;
   padding: 1.4rem 4.2rem 1.4rem 1.6rem;
-  border-style: solid;
-  border-width: 0px;
-  border-color: transparent;
-  box-shadow: ${({ valid }) =>
-    valid
-      ? "inset 0 0 0 1px var(--border-input)"
-      : "inset 0 0 0 2px var(--border-error)"};
+  border: 1px solid;
+  border-color: ${({ valid }) => {
+    if (valid) {
+      return "var(--border-input)";
+    } else {
+      return "var(--border-error)";
+    }
+  }};
   line-height: 2rem;
   color: var(--txt-input);
-  background-color: var(--bg-input);
+  background: var(--bg-input);
+  border-radius: 8px;
   border-radius: 8px;
   letter-spacing: -0.01rem;
-  font-family:
-    Cerebri Bold,
-    "sans-serif";
+  font-family: Cerebri, "sans-serif";
   font-size: 1.6rem;
   transition: all 0.2s ease-in-out 0s;
 
   &:hover {
-    outline: none;
-    border-color: var(--border-input-hover);
-    box-shadow: ${({ valid }) =>
-      valid
-        ? "inset 0 0 0 2px var(--border-input-hover)"
-        : "inset 0 0 0 2px var(--border-error-hover)"};
+    border-color: ${({ valid }) => {
+      if (valid) {
+        return "var(--border-input-hover)";
+      } else {
+        return "var(--border-error-hover)";
+      }
+    }};
     transition: none 0s ease 0s;
   }
 
   &:focus {
-    border-color: var(--border-input-focus);
-    box-shadow: ${({ valid }) =>
-      valid
-        ? "0 0 0 2px var(--border-input-focus),inset 0 0 0 2px var(--border-input-focus)"
-        : "0 0 0 2px var(--border-error),inset 0 0 0 2px var(--border-error)"};
+    border-color: ${({ valid }) => {
+      if (valid) {
+        return "var(--border-input-focus)";
+      } else {
+        return "var(--border-error)";
+      }
+    }};
+    border-width: 2px;
     outline: none;
   }
 
@@ -141,7 +143,7 @@ const InputEmail = ({
           innerRef={inputRef}
           onChange={handleChange}
           placeholder={t("login.emailPlaceholder")}
-          valid={!error}
+          valid={!error ? 1 : 0}
         />
         <SideButton
           show={value !== "" ? 1 : 0}

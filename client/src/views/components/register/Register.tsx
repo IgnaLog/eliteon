@@ -15,19 +15,21 @@ const Content = styled.div`
   padding: 3rem;
   border-radius: 0.4rem;
   text-align: center;
-  background-color: rgb(30, 27, 30);
+  background-color: var(--bg-modal);
   pointer-events: auto !important;
 
   span,
   a {
-    font-family: cerebri, sans-serif;
-    font-size: 1rem;
+    font-family:
+      Cerebri Regular,
+      sans-serif;
+    font-size: 1.4rem;
     letter-spacing: -0.1px;
-    color: white;
+    color: var(--txt-link);
   }
 
   span {
-    color: rgb(173, 174, 181);
+    color: var(--txt-span);
   }
 
   a,

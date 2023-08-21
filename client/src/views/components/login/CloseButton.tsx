@@ -14,12 +14,9 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 0.4rem;
-  background-color: var(--bg-btn-txt);
-  color: var(--fill-btn-icon);
 
   &:hover {
-    background-color: var(--bg-btn-txt-hover);
-    color: var(--fill-btn-icon-hover);
+    background: var(--bg-btn-txt-hover);
   }
 
   &:active {
@@ -37,7 +34,6 @@ const FigureIcon = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  fill: var(--color-fill-current);
 `;
 
 type Props = {

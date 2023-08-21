@@ -16,7 +16,7 @@ const Content = styled.section`
   padding: 3rem;
   border-radius: 0.4rem;
   overflow: hidden;
-  background-color: var(--bg-navy);
+  background-color: var(--bg-modal);
   pointer-events: auto !important;
 
   span,

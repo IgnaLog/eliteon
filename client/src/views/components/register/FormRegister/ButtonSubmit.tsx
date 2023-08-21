@@ -5,17 +5,24 @@ const Button = styled.button`
   padding: 1rem 1.8rem;
   border-radius: 0.6rem;
   cursor: pointer;
-  background-color: rgb(69, 255, 255);
-  color: rgb(16, 16, 16);
+  background-color: var(--bg-btn-primary);
+  color: var(--txt-btn-primary);
   font-family: Cerebri, sans-serif;
   font-size: 1.7rem;
   letter-spacing: -0.01rem;
   line-height: 2.2rem;
-  transition: border-color 216ms ease-in-out 0s,
-    background-color 216ms ease-in-out 0s, transform 0.15s ease-in-out 0s;
+  transition:
+    border-color 216ms ease-in-out 0s,
+    background-color 216ms ease-in-out 0s,
+    transform 0.15s ease-in-out 0s;
+
+  &:hover {
+    background-color: var(--bg-btn-primary-hover);
+  }
 
   &:disabled {
-    opacity: 0.4;
+    background-color: var(--bg-btn-disabled);
+    color: var(--txt-btn-disabled);
     cursor: not-allowed;
   }
 `;

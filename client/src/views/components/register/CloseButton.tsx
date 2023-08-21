@@ -16,8 +16,11 @@ const Button = styled.button`
   border-radius: 0.4rem;
 
   &:hover {
-    background-color: rgba(83, 83, 95, 0.48);
-    color: #efeff1;
+    background: var(--bg-btn-txt-hover);
+  }
+
+  &:active {
+    background: var(--bg-btn-txt-hover);
   }
 `;
 

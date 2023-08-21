@@ -6,6 +6,8 @@ const StyledTitle = styled.h2`
   font-size: 3rem;
   letter-spacing: -0.2px;
   line-height: 3.4rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const StyledSubTitle = styled.p`
@@ -13,7 +15,8 @@ const StyledSubTitle = styled.p`
   font-size: 1.3rem;
   letter-spacing: -0.2px;
   text-align: left;
-  color: rgb(173, 174, 181);
+  margin-bottom: 2rem;
+  color: var(--txt-span);
 `;
 
 const Title = () => {

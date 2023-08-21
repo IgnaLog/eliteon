@@ -5,7 +5,7 @@ const StyledProgressBar = styled.div`
   height: 0.5rem;
   overflow: hidden;
   border-radius: 0.6rem;
-  background: hsla(0, 0%, 100%, 0.16);
+  background: var(--bg-progress);
   transition: color 0.3s ease-out;
 `;
 

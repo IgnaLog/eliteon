@@ -5,9 +5,10 @@ import {
   MouseEvent,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from "react";
 import { useTranslation } from "react-i18next";
-import * as Yup from "yup";
+// import * as Yup from "yup";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Form, Formik, FormikHelpers } from "formik";
 import styled from "styled-components";
@@ -43,10 +44,10 @@ const Login = ({ setServerMsg }: Props) => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/"; // It is used to get the previous location of the web page from which the login page is accessed. If either of the "state" or "from" properties does not exist, the default value "/" is returned.
 
-  const signinSchema = Yup.object().shape({
-    email: Yup.string().required("").min(3, t("login.yupEmail")),
-    password: Yup.string().required("").min(8, t("login.yupPassword")),
-  });
+  // const signinSchema = Yup.object().shape({
+  //   email: Yup.string().required("").min(3, t("login.yupEmail")),
+  //   password: Yup.string().required("").min(8, t("login.yupPassword")),
+  // });
 
   const initialValues: FormValues = {
     email: "",
@@ -118,11 +119,15 @@ const Login = ({ setServerMsg }: Props) => {
     setSubmitting(false);
   };
 
+  useEffect(() => {
+    inputEmailRef.current?.focus();
+  }, []);
+
   return (
     <>
       <Formik
         initialValues={initialValues}
-        validationSchema={signinSchema}
+        // validationSchema={signinSchema}
         onSubmit={handleSubmit}
       >
         {({ values, isSubmitting, handleChange, errors, setFieldValue }) => (

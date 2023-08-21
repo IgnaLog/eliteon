@@ -9,12 +9,12 @@ const Container = styled.div`
     font-family: cerebri, sans-serif;
     font-size: 1.4rem;
     letter-spacing: -0.1px;
-    color: rgb(173, 174, 181);
+    color: var(--txt-span);
     text-decoration: none;
   }
 
   a {
-    color: white;
+    color: var(--txt-link);
     cursor: pointer;
   }
 `;

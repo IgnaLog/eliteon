@@ -22,7 +22,7 @@ const Indicator = ({ percentage, description, score }: Props) => {
     } else if (score <= 3) {
       return "#fba12e;";
     } else {
-      return "#00f593;";
+      return "var(--fill-success)";
     }
   };
   return (
