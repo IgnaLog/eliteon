@@ -1,0 +1,37 @@
+{
+    "login": {
+        "yupEmail": "Debe tener al menos 3 caracteres",
+        "yupPassword": "Debe tener al menos 8 caracteres",
+        "serverMsgNoResponse": "Sin respuesta del servidor",
+        "serverMsgInvalid": "Email o contraseña inválidos",
+        "serverMsgUnauthorized": "No autorizado",
+        "serverMsgFailed": "Inicio de sesión fallido",
+        "email": "Correo electrónico",
+        "emailPlaceholder": "tú@ejemplo.com",
+        "password": "Contraseña",
+        "passwordPlaceholder": "Contraseña",
+        "submit": "Iniciar Sesión",
+        "title": "Ingresar a Eliteon",
+        "terms": "Al continuar, aceptas los <a href='/terms-of-service'>Términos del Servicio</a> de Eliteon, incluyendo los <a href='/additional-terms'>Términos Adicionales</a> y la <a href='/privacy-policy'>Política de Privacidad</a>.",
+        "noAccount": "<span>No tienes una cuenta?</span><a href='/register'> Regístrate</a>"
+    },
+    "register": {
+        "title": "Únete hoy a Eliteon",
+        "subTitle": "Crear una cuenta te permite seguir a tus celebridades favoritas y obtener sus productos exclusivos.",
+        "email": "Correo electrónico",
+        "emailPlaceholder": "tú@ejemplo.com",
+        "password": "Contraseña",
+        "passwordPlaceholder": "Contraseña",
+        "submit": "Regístrate",
+        "alreadyRegistered": "<span>Ya estás registrado?</span><a href='/login'> Inicia sesión</a>",
+        "serverMsgNoResponse": "Sin respuesta del servidor",
+        "serverMsgEmailExists": "Ya existe una cuenta con ese correo electrónico",
+        "serverMsgRegistrationFailed": "Registro fallido",
+        "yupEmail": "Introduce un correo electrónico válido.",
+        "yupPassword": "Las contraseñas deben tener al menos 8 caracteres.",
+        "terms": " Al crear una cuenta, aceptas los <a href='/terms-of-service'>Términos del servicio</a> de Eliteon, incluidos los <a href='/additional-terms'>Términos adicionales</a> y la <a href='/privacy-policy'>Política de privacidad</a>.",
+        "weak": "Débil",
+        "normal": "Normal",
+        "safe": "Segura"
+    }
+}

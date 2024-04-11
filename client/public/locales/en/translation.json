@@ -1,0 +1,37 @@
+{
+    "login": {
+        "yupEmail": "Must be at least 3 characters",
+        "yupPassword": "Must be at least 8 characters",
+        "serverMsgNoResponse": "No Server Response",
+        "serverMsgInvalid": "Invalid Email or Password",
+        "serverMsgUnauthorized": "Unauthorized",
+        "serverMsgFailed": "Login Failed",
+        "title": "Log in to Eliteon",
+        "email": "Email",
+        "emailPlaceholder": "you@example.com",
+        "password": "Password",
+        "passwordPlaceholder": "Password",
+        "submit": "Log in",
+        "terms": "By continuing you agree to Eliteon's <a href='/terms-of-service'>Terms of Service</a>, including <a href='/additional-terms'>Additional Terms</a>, and <a href='/privacy-policy'>Privacy Policy</a>.",
+        "noAccount": "<span>Don't have an account?</span><a href='/register'> Sign up</a>"
+    },
+    "register": {
+        "title": "Join Eliteon today",
+        "subTitle": "Creating an account allows you to follow your favorite celebrities and get their exclusive products.",
+        "email": "Email",
+        "emailPlaceholder": "you@example.com",
+        "password": "Password",
+        "passwordPlaceholder": "Password",
+        "submit": "Sign in",
+        "alreadyRegistered": "<span>Already registered?</span><a href='/login'> Sign in</a>",
+        "serverMsgNoResponse": "No Server Response",
+        "serverMsgEmailExists": "Email already exists",
+        "serverMsgRegistrationFailed": "Registration Failed",
+        "yupEmail": "Please enter a valid email.",
+        "yupPassword": "Passwords must be at least 8 characters.",
+        "terms": "By creating an account, you agree to Eliteon's <a href='/terms-of-service'>Terms of Service</a>, including the <a href='/additional-terms'>Additional Terms</a> and <a href='/privacy-policy'>Privacy Policy</a>.",
+        "weak": "Weak",
+        "normal": "Normal",
+        "safe": "Safe"
+    }
+}
