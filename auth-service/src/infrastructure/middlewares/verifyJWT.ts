@@ -1,6 +1,6 @@
+/// <reference path="../../types/express.d.ts" />
 import { Request, Response, NextFunction } from "express";
 import jwt, { Secret } from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET } from "../config/dotenv";
 
 const verifyJWT = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
@@ -9,7 +9,11 @@ const verifyJWT = async (req: Request, res: Response, next: NextFunction) => {
     return res.sendStatus(401); // Unauthorized
   const token = authHeader.split(" ")[1];
   try {
-    const decoded: any = await jwt.verify(token, ACCESS_TOKEN_SECRET as Secret);
+    const decoded: any = await jwt.verify(
+      token,
+      process.env.ACCESS_TOKEN_SECRET as Secret
+    );
+    console.log(decoded.userInfo.roles);
     req.user = decoded.userInfo.user;
     req.roles = decoded.userInfo.roles;
     next();

@@ -1,5 +1,5 @@
 import { useAuthStore } from "../store/authStore";
-import { logoutRequest } from "../api/authService";
+import { logoutRequest } from "../services/authService";
 
 const useLogout = () => {
   const { clearAuth } = useAuthStore();

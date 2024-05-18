@@ -12,6 +12,6 @@ For this last solution, we must handle what happens when trying to log in with a
 
 Control the number of logins, meaning that the same user makes numerous logins. This could result in the creation of multiple refresh tokens for the same user, possibly achieved with a browser in incognito mode. To address this, limit the number of consecutive logins by the same user. This could be solved with the solution from the previous step.
 
-### Register
+### Signup
 
 Control the possibility of someone registering with multiple accounts simultaneously. This could be an attempt to create bots or fake accounts. To address this, limit the number of registrations made from the same IP address and fingerprint.

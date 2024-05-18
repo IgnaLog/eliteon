@@ -13,17 +13,19 @@
         "submit": "Iniciar Sesión",
         "title": "Ingresar a Eliteon",
         "terms": "Al continuar, aceptas los <a href='/terms-of-service'>Términos del Servicio</a> de Eliteon, incluyendo los <a href='/additional-terms'>Términos Adicionales</a> y la <a href='/privacy-policy'>Política de Privacidad</a>.",
-        "noAccount": "<span>No tienes una cuenta?</span><a href='/register'> Regístrate</a>"
+        "noAccount": "No tienes una cuenta?",
+        "signUp": "Regístrate"
     },
-    "register": {
+    "signup": {
         "title": "Únete hoy a Eliteon",
-        "subTitle": "Crear una cuenta te permite seguir a tus celebridades favoritas y obtener sus productos exclusivos.",
+        "subtitle": "Crear una cuenta te permite seguir a tus celebridades favoritas y obtener sus productos exclusivos.",
         "email": "Correo electrónico",
         "emailPlaceholder": "tú@ejemplo.com",
         "password": "Contraseña",
         "passwordPlaceholder": "Contraseña",
         "submit": "Regístrate",
-        "alreadyRegistered": "<span>Ya estás registrado?</span><a href='/login'> Inicia sesión</a>",
+        "alreadyRegistered": "Ya estás registrado?",
+        "signIn": "Inicia sesión",
         "serverMsgNoResponse": "Sin respuesta del servidor",
         "serverMsgEmailExists": "Ya existe una cuenta con ese correo electrónico",
         "serverMsgRegistrationFailed": "Registro fallido",
@@ -32,6 +34,16 @@
         "terms": " Al crear una cuenta, aceptas los <a href='/terms-of-service'>Términos del servicio</a> de Eliteon, incluidos los <a href='/additional-terms'>Términos adicionales</a> y la <a href='/privacy-policy'>Política de privacidad</a>.",
         "weak": "Débil",
         "normal": "Normal",
-        "safe": "Segura"
+        "safe": "Segura",
+        "scoreVal0": "Los patrones del teclado son fáciles de adivinar.",
+        "scoreVal1": "Esta es una contraseña muy común. Añade más palabras o caracteres.",
+        "scoreVal2": "Tu contraseña es vulnerable, por tu seguridad, te recomendamos mejorarla.",
+        "scoreVal3": "Esa contraseña es buena, pero puedes hacerla aún mejor.",
+        "scoreVal4": "¡Estupenda contraseña! Úsala solo aquí para ayudar a proteger tu cuenta.",
+        "scoreValDefault": "Error de validación. Prueba con otra contraseña.",
+        "invalidEmail": "Introduce un correo electrónico válido.",
+        "validEmail": "Tendrás que verificar que eres el propietario de esta cuenta de correo electrónico.",
+        "passwordMinLength": "Las contraseñas deben tener al menos 8 caracteres.",
+        "passwordAscii": "La contraseña solo puede contener caracteres ASCII."
     }
 }

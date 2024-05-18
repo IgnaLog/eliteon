@@ -3,7 +3,6 @@ import request from "supertest";
 import { prisma } from "../src/infrastructure/dependencies";
 import bcrypt from "bcrypt";
 import jwt, { Secret } from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET } from "../src/infrastructure/config/dotenv";
 
 type User = {
   email: string;
@@ -26,7 +25,7 @@ export function createFakeAccessToken() {
         roles: [5150], // Admin
       },
     },
-    ACCESS_TOKEN_SECRET as Secret,
+    process.env.ACCESS_TOKEN_SECRET as Secret,
     { expiresIn: "10s" } // Production expiresIn 5-15 min
   );
 }

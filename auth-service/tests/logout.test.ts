@@ -9,7 +9,6 @@ import {
 } from "./helpers";
 import sinon from "sinon";
 import jwt, { Secret } from "jsonwebtoken";
-import { REFRESH_TOKEN_SECRET } from "../src/infrastructure/config/dotenv";
 import { findRefreshTokenByToken } from "./prismaHelpers";
 
 describe("POST /refresh", () => {
@@ -38,9 +37,13 @@ describe("POST /refresh", () => {
 
   test("If you send a jwt cookie and the token is NOT found in the DB, we will receive in response the deletion of that cookie and a status code 204", async () => {
     // Invent a token that you can't find in DB
-    const token = jwt.sign({ user: 0 }, REFRESH_TOKEN_SECRET as Secret, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      { user: 0 },
+      process.env.REFRESH_TOKEN_SECRET as Secret,
+      {
+        expiresIn: "1d",
+      }
+    );
 
     // Do Logout
     const cookie = `jwt=${token}`;

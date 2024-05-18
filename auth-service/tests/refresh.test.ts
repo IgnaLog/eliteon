@@ -10,7 +10,6 @@ import {
 } from "./helpers";
 import sinon from "sinon";
 import jwt, { Secret } from "jsonwebtoken";
-import { REFRESH_TOKEN_SECRET } from "../src/infrastructure/config/dotenv";
 import {
   findRefreshTokenByToken,
   getCountOfRefreshTokensByEmail,
@@ -50,7 +49,7 @@ describe("POST /refresh", () => {
 
   test("Whenever you send a cookie with a jwt token you should receive the deletion of that jwt cookie in response.", async () => {
     // Generate any token
-    const token = generateFakeToken(0, REFRESH_TOKEN_SECRET);
+    const token = generateFakeToken(0, process.env.REFRESH_TOKEN_SECRET);
 
     // Perform the refresh request with a jwt cookie
     const response = await refreshTokenRequest(`jwt=${token}`);
@@ -75,9 +74,13 @@ describe("POST /refresh", () => {
 
   test("Should receive a status code 403 forbidden if you provide a jwt cookie that is not associated with any user in the DB and we cause an error in the user search with the payload", async () => {
     // Generate a valid token but with an incorrect field that will cause an error in the database search
-    const token = jwt.sign({ badfield: 0 }, REFRESH_TOKEN_SECRET as Secret, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      { badfield: 0 },
+      process.env.REFRESH_TOKEN_SECRET as Secret,
+      {
+        expiresIn: "1d",
+      }
+    );
 
     // Perform the refresh request with a jwt cookie
     const response = await refreshTokenRequest(`jwt=${token}`);
@@ -87,7 +90,7 @@ describe("POST /refresh", () => {
 
   test("Should receive a status code 403 forbidden if you provide a jwt cookie that is not associated with any user in the DB and its payload id does not belong to any user", async () => {
     // Generate a valid token but the user field (user ID) of the payload will never be found in any user in the DB
-    const token = generateFakeToken(0, REFRESH_TOKEN_SECRET);
+    const token = generateFakeToken(0, process.env.REFRESH_TOKEN_SECRET);
     const response = await refreshTokenRequest(`jwt=${token}`);
     expect(response.status).toBe(403);
     expect(response.headers["content-type"]).toMatch(/application\/json/);

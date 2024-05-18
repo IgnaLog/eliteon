@@ -3,10 +3,6 @@ import { IAuthService } from "../../domain/services/IAuthService";
 import { AppError } from "../errors/appError";
 import bcrypt from "bcrypt";
 import jwt, { Secret } from "jsonwebtoken";
-import {
-  ACCESS_TOKEN_SECRET,
-  REFRESH_TOKEN_SECRET,
-} from "../../infrastructure/config/dotenv";
 import { IUserWithRoles } from "../../domain/entities/IUserWithRole";
 import { ICookies } from "../../domain/entities/ICookies";
 import { ILoginResult } from "../../domain/entities/ILoginResult";
@@ -31,19 +27,23 @@ export class AuthService implements IAuthService {
           roles: roles,
         },
       },
-      ACCESS_TOKEN_SECRET as Secret,
-      { expiresIn: "10s" } // Production expiresIn 5-15 min
+      process.env.ACCESS_TOKEN_SECRET as Secret,
+      { expiresIn: "60s" } // Production expiresIn 5-15 min
     );
   }
 
   private createRefreshToken(user: IUserWithRoles): string {
-    return jwt.sign({ user: user.id }, REFRESH_TOKEN_SECRET as Secret, {
-      expiresIn: "1d",
-    });
+    return jwt.sign(
+      { user: user.id },
+      process.env.REFRESH_TOKEN_SECRET as Secret,
+      {
+        expiresIn: "1d",
+      }
+    );
   }
 
   private decodeToken(token: string): any {
-    return jwt.verify(token, REFRESH_TOKEN_SECRET as Secret);
+    return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET as Secret);
   }
 
   async handleLogin(

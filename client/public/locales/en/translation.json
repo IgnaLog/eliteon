@@ -13,17 +13,19 @@
         "passwordPlaceholder": "Password",
         "submit": "Log in",
         "terms": "By continuing you agree to Eliteon's <a href='/terms-of-service'>Terms of Service</a>, including <a href='/additional-terms'>Additional Terms</a>, and <a href='/privacy-policy'>Privacy Policy</a>.",
-        "noAccount": "<span>Don't have an account?</span><a href='/register'> Sign up</a>"
+        "noAccount": "Don't have an account?",
+        "signUp": "Sign up"
     },
-    "register": {
+    "signup": {
         "title": "Join Eliteon today",
-        "subTitle": "Creating an account allows you to follow your favorite celebrities and get their exclusive products.",
+        "subtitle": "Creating an account allows you to follow your favorite celebrities and get their exclusive products.",
         "email": "Email",
         "emailPlaceholder": "you@example.com",
         "password": "Password",
         "passwordPlaceholder": "Password",
         "submit": "Sign in",
-        "alreadyRegistered": "<span>Already registered?</span><a href='/login'> Sign in</a>",
+        "alreadyRegistered": "Already registered?",
+        "signIn": "Sign in",
         "serverMsgNoResponse": "No Server Response",
         "serverMsgEmailExists": "Email already exists",
         "serverMsgRegistrationFailed": "Registration Failed",
@@ -32,6 +34,16 @@
         "terms": "By creating an account, you agree to Eliteon's <a href='/terms-of-service'>Terms of Service</a>, including the <a href='/additional-terms'>Additional Terms</a> and <a href='/privacy-policy'>Privacy Policy</a>.",
         "weak": "Weak",
         "normal": "Normal",
-        "safe": "Safe"
+        "safe": "Safe",
+        "scoreVal0": "Keyboard patterns are easy to guess.",
+        "scoreVal1": "This is a very common password. Add more words or characters.",
+        "scoreVal2": "Your password is vulnerable. For your security, we recommend improving it.",
+        "scoreVal3": "That's a good password, but you can make it even better.",
+        "scoreVal4": "Great password! Use it only here to help protect your account.",
+        "scoreValDefault": "Validation error. Try another password.",
+        "invalidEmail": "Please enter a valid email address.",
+        "validEmail": "You will need to verify that you are the owner of this email account.",
+        "passwordMinLength": "Passwords must be at least 8 characters long.",
+        "passwordAscii": "Password can only contain ASCII characters."
     }
 }

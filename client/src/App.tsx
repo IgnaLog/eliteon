@@ -1,15 +1,12 @@
-import Home from "./views/pages/Home";
-import Layout from "./views/components/Layout";
-import Editor from "./views/pages/Editor";
-import Admin from "./views/pages/Admin";
-import Missing from "./views/pages/Missing";
-import Lounge from "./views/pages/Lounge";
-import RequireAuth from "./views/components/RequireAuth";
-import PersistLogin from "./views/components/PersistLogin";
+import Admin from "./pages/Admin";
+import Missing from "./pages/Missing";
 import { Routes, Route } from "react-router-dom";
-import Landing from "./views/pages/Landing";
 import { useThemeStore } from "./store/themeStore";
 import { useEffect } from "react";
+import PersistLogin from "./features/authentication/components/PersistLogin";
+import RequireAuth from "./features/authentication/components/RequireAuth";
+import Users from "./pages/Users";
+import Home from "./pages/Home";
 
 const ROLES = {
   USER: 2001,
@@ -26,29 +23,15 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="landing" element={<Landing />} />
-
+      <Route path="/" element={<Home />}>
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.USER]} />}>
-            <Route path="/" element={<Home />} />
+            <Route path="users" element={<Users />} />
           </Route>
-
-          <Route element={<RequireAuth allowedRoles={[ROLES.EDITOR]} />}>
-            <Route path="editor" element={<Editor />} />
-          </Route>
-
           <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
             <Route path="admin" element={<Admin />} />
           </Route>
-
-          <Route
-            element={<RequireAuth allowedRoles={[ROLES.EDITOR, ROLES.ADMIN]} />}
-          >
-            <Route path="lounge" element={<Lounge />} />
-          </Route>
         </Route>
-
         <Route path="*" element={<Missing />} />
       </Route>
     </Routes>

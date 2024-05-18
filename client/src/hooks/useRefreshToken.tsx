@@ -1,4 +1,4 @@
-import { refreshRequest } from "../api/authService";
+import { refreshRequest } from "../services/authService";
 import { useAuthStore } from "../store/authStore";
 
 const useRefreshToken = () => {

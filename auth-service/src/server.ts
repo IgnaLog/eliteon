@@ -4,11 +4,10 @@ import cors from "cors";
 import createAccessLogStream from "./infrastructure/config/logStream";
 import credentials from "./infrastructure/middlewares/credentials";
 import corsOptionsDelegate from "./infrastructure/config/corsOptions";
-import { PORT } from "./infrastructure/config/dotenv";
 import verifyJWT from "./infrastructure/middlewares/verifyJWT";
 import cookieParser from "cookie-parser";
 import usersRoutes from "./infrastructure/routes/users.routes";
-import registerRoutes from "./infrastructure/routes/register.routes";
+import signupRoutes from "./infrastructure/routes/signup.routes";
 import authRoutes from "./infrastructure/routes/auth.routes";
 import refreshRoutes from "./infrastructure/routes/refresh.routes";
 import logoutRoutes from "./infrastructure/routes/logout.routes";
@@ -34,7 +33,7 @@ app.use(cookieParser());
 // app.use("/", express.static(path.join(__dirname, "/public")));
 
 /* Routes */
-app.use("/register", registerRoutes);
+app.use("/signup", signupRoutes);
 app.use("/login", authRoutes);
 app.use("/refresh", refreshRoutes);
 app.use("/logout", logoutRoutes);
@@ -42,8 +41,8 @@ app.use(verifyJWT);
 app.use("/users", usersRoutes);
 
 /* Open the server */
-const server = app.listen(PORT, () =>
-  console.log(`Server running on port ${PORT}`)
+const server = app.listen(process.env.PORT, () =>
+  console.log(`Server running on port ${process.env.PORT}`)
 );
 
 export { app, server };

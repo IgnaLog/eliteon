@@ -1,6 +1,5 @@
 import {
   initialUsers,
-  api,
   prisma,
   usersWithHashPasswords,
   server,
