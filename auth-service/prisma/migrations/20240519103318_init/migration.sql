@@ -15,8 +15,8 @@ CREATE TABLE "user" (
 -- CreateTable
 CREATE TABLE "role" (
     "id" SERIAL NOT NULL,
-    "rolename" "role_type" NOT NULL DEFAULT 'USER',
-    "roleId" INTEGER NOT NULL DEFAULT 2001,
+    "rolename" "role_type" NOT NULL DEFAULT 'ADMIN',
+    "roleId" INTEGER NOT NULL DEFAULT 5150,
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "role_pkey" PRIMARY KEY ("id")
