@@ -91,7 +91,7 @@ describe("GET /users", () => {
 
     // Through database
     // const user = await prisma.user.findUnique({
-    //   where: { id: userId.toString() },
+    //   where: { id: id.toString() },
     // });
     // expect(user).toBeNull();
   });

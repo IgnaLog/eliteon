@@ -1,3 +1,3 @@
 export interface ICookies {
-  jwt: string;
+  jwt?: string;
 }

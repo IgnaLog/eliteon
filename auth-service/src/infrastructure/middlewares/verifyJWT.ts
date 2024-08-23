@@ -13,7 +13,6 @@ const verifyJWT = async (req: Request, res: Response, next: NextFunction) => {
       token,
       process.env.ACCESS_TOKEN_SECRET as Secret
     );
-    console.log(decoded.userInfo.roles);
     req.user = decoded.userInfo.user;
     req.roles = decoded.userInfo.roles;
     next();
